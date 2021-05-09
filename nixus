@@ -1,0 +1,3628 @@
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+--NO WAY!
+local NIXUS_FOLDER = makefolder('Nixus Configs')
+
+
+local finity = {}
+finity.gs = {}
+
+finity.theme = { -- light
+	main_container = Color3.fromRGB(249, 249, 255),
+	separator_color = Color3.fromRGB(223, 219, 228),
+
+	text_color = Color3.fromRGB(96, 96, 96),
+
+	category_button_background = Color3.fromRGB(223, 219, 228),
+	category_button_border = Color3.fromRGB(200, 196, 204),
+
+	checkbox_checked = Color3.fromRGB(114, 214, 112),
+	checkbox_outer = Color3.fromRGB(198, 189, 202),
+	checkbox_inner = Color3.fromRGB(249, 239, 255),
+
+	slider_color = Color3.fromRGB(114, 214, 112),
+	slider_color_sliding = Color3.fromRGB(114, 214, 112),
+	slider_background = Color3.fromRGB(198, 188, 202),
+	slider_text = Color3.fromRGB(112, 112, 112),
+
+	textbox_background = Color3.fromRGB(198, 189, 202),
+	textbox_background_hover = Color3.fromRGB(215, 206, 227),
+	textbox_text = Color3.fromRGB(112, 112, 112),
+	textbox_text_hover = Color3.fromRGB(50, 50, 50),
+	textbox_placeholder = Color3.fromRGB(178, 178, 178),
+
+	dropdown_background = Color3.fromRGB(198, 189, 202),
+	dropdown_text = Color3.fromRGB(112, 112, 112),
+	dropdown_text_hover = Color3.fromRGB(50, 50, 50),
+	dropdown_scrollbar_color = Color3.fromRGB(198, 189, 202),
+	
+	button_background = Color3.fromRGB(198, 189, 202),
+	button_background_hover = Color3.fromRGB(215, 206, 227),
+	button_background_down = Color3.fromRGB(178, 169, 182),
+	
+	scrollbar_color = Color3.fromRGB(198, 189, 202),
+}
+
+finity.dark_theme = { -- dark
+	main_container = Color3.fromRGB(32, 32, 33),
+	separator_color = Color3.fromRGB(63, 63, 65),
+
+	text_color = Color3.fromRGB(206, 206, 206),
+
+	category_button_background = Color3.fromRGB(63, 62, 65),
+	category_button_border = Color3.fromRGB(72, 71, 74),
+
+	checkbox_checked = Color3.fromRGB(132, 255, 130),
+	checkbox_outer = Color3.fromRGB(84, 81, 86),
+	checkbox_inner = Color3.fromRGB(132, 132, 136),
+
+	slider_color = Color3.fromRGB(177, 177, 177),
+	slider_color_sliding = Color3.fromRGB(132, 255, 130),
+	slider_background = Color3.fromRGB(88, 84, 90),
+	slider_text = Color3.fromRGB(177, 177, 177),
+
+	textbox_background = Color3.fromRGB(103, 103, 106),
+	textbox_background_hover = Color3.fromRGB(137, 137, 141),
+	textbox_text = Color3.fromRGB(195, 195, 195),
+	textbox_text_hover = Color3.fromRGB(232, 232, 232),
+	textbox_placeholder = Color3.fromRGB(135, 135, 138),
+
+	dropdown_background = Color3.fromRGB(88, 88, 91),
+	dropdown_text = Color3.fromRGB(195, 195, 195),
+	dropdown_text_hover = Color3.fromRGB(232, 232, 232),
+	dropdown_scrollbar_color = Color3.fromRGB(118, 118, 121),
+	
+	button_background = Color3.fromRGB(103, 103, 106),
+	button_background_hover = Color3.fromRGB(137, 137, 141),
+	button_background_down = Color3.fromRGB(70, 70, 81),
+	
+	scrollbar_color = Color3.fromRGB(118, 118, 121),
+}
+
+setmetatable(finity.gs, {
+	__index = function(_, service)
+		return game:GetService(service)
+	end,
+	__newindex = function(t, i)
+		t[i] = nil
+		return
+	end
+})
+
+
+local mouse = finity.gs["Players"].LocalPlayer:GetMouse()
+
+function finity:Create(class, properties)
+	local object = Instance.new(class)
+
+	for prop, val in next, properties do
+		if object[prop] and prop ~= "Parent" then
+			object[prop] = val
+		end
+	end
+
+	return object
+end
+
+function finity:addShadow(object, transparency)
+	local shadow = self:Create("ImageLabel", {
+		Name = "Shadow",
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		BackgroundTransparency = 1,
+		Position = UDim2.new(0.5, 0, 0.5, 4),
+		Size = UDim2.new(1, 6, 1, 6),
+		Image = "rbxassetid://1316045217",
+		ImageTransparency = transparency and true or 0.5,
+		ImageColor3 = Color3.fromRGB(35, 35, 35),
+		ScaleType = Enum.ScaleType.Slice,
+		SliceCenter = Rect.new(10, 10, 118, 118)
+	})
+
+	shadow.Parent = object
+end
+
+function finity.new(isdark, gprojectName, thinProject)
+	local finityObject = {}
+	local self2 = finityObject
+	local self = finity
+
+	if not finity.gs["RunService"]:IsStudio() and self.gs["CoreGui"]:FindFirstChild("FinityUI") then
+		warn("finity:", "instance already exists in coregui!")
+		
+		return
+	end
+
+	local theme = finity.theme
+	local projectName = false
+	local thinMenu = false
+	
+	if isdark == true then theme = finity.dark_theme end
+	if gprojectName then projectName = gprojectName end
+	if thinProject then thinMenu = thinProject end
+	
+	local toggled = true
+	local typing = false
+	local firstCategory = true
+    local savedposition = UDim2.new(0.5, 0, 0.5, 0)
+    
+
+	local finityData
+	finityData = {
+		UpConnection = nil,
+		ToggleKey = Enum.KeyCode.Home,
+	}
+
+	self2.ChangeToggleKey = function(NewKey)
+		finityData.ToggleKey = NewKey
+		
+		if not projectName then
+			self2.tip.Text = "Press '".. string.sub(tostring(NewKey), 14) .."' to hide this menu"
+		end
+		
+		if finityData.UpConnection then
+			finityData.UpConnection:Disconnect()
+		end
+
+		finityData.UpConnection = finity.gs["UserInputService"].InputEnded:Connect(function(Input)
+			if Input.KeyCode == finityData.ToggleKey and not typing then
+                toggled = not toggled
+
+                pcall(function() self2.modal.Modal = toggled end)
+
+                if toggled then
+					pcall(self2.container.TweenPosition, self2.container, savedposition, "Out", "Sine", 0.5, true)
+                else
+                    savedposition = self2.container.Position;
+					pcall(self2.container.TweenPosition, self2.container, UDim2.new(savedposition.Width.Scale, savedposition.Width.Offset, 1.5, 0), "Out", "Sine", 0.5, true)
+				end
+			end
+		end)
+	end
+	
+	self2.ChangeBackgroundImage = function(ImageID, Transparency)
+		self2.container.Image = ImageID
+		
+		if Transparency then
+			self2.container.ImageTransparency = Transparency
+		else
+			self2.container.ImageTransparency = 0.8
+		end
+	end
+
+	finityData.UpConnection = finity.gs["UserInputService"].InputEnded:Connect(function(Input)
+		if Input.KeyCode == finityData.ToggleKey and not typing then
+			toggled = not toggled
+
+			if toggled then
+				self2.container:TweenPosition(UDim2.new(0.5, 0, 0.5, 0), "Out", "Sine", 0.5, true)
+			else
+				self2.container:TweenPosition(UDim2.new(0.5, 0, 1.5, 0), "Out", "Sine", 0.5, true)
+			end
+		end
+	end)
+
+	self2.userinterface = self:Create("ScreenGui", {
+		Name = "FinityUI",
+		ZIndexBehavior = Enum.ZIndexBehavior.Global,
+		ResetOnSpawn = false,
+	})
+
+	self2.container = self:Create("ImageLabel", {
+		Draggable = true,
+		Active = true,
+		Name = "Container",
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		BackgroundTransparency = 0,
+		BackgroundColor3 = theme.main_container,
+		BorderSizePixel = 0,
+		Position = UDim2.new(0.5, 0, 0.5, 0),
+		Size = UDim2.new(0, 800, 0, 500),
+		ZIndex = 2,
+		ImageTransparency = 1
+    })
+    
+    self2.modal = self:Create("TextButton", {
+        Text = "";
+        Transparency = 1;
+        Modal = true;
+    }) self2.modal.Parent = self2.userinterface;
+	
+	if thinProject and typeof(thinProject) == "UDim2" then
+		self2.container.Size = thinProject
+	end
+
+	self2.container.Draggable = true
+	self2.container.Active = true
+
+	self2.sidebar = self:Create("Frame", {
+		Name = "Sidebar",
+		BackgroundColor3 = Color3.new(0.976471, 0.937255, 1),
+		BackgroundTransparency = 1,
+		BorderColor3 = Color3.new(0.745098, 0.713726, 0.760784),
+		Size = UDim2.new(0, 120, 1, -30),
+		Position = UDim2.new(0, 0, 0, 30),
+		ZIndex = 2,
+	})
+
+	self2.categories = self:Create("Frame", {
+		Name = "Categories",
+		BackgroundColor3 = Color3.new(0.976471, 0.937255, 1),
+		ClipsDescendants = true,
+		BackgroundTransparency = 1,
+		BorderColor3 = Color3.new(0.745098, 0.713726, 0.760784),
+		Size = UDim2.new(1, -120, 1, -30),
+		AnchorPoint = Vector2.new(1, 0),
+		Position = UDim2.new(1, 0, 0, 30),
+		ZIndex = 2,
+	})
+	self2.categories.ClipsDescendants = true
+
+	self2.topbar = self:Create("Frame", {
+		Name = "Topbar",
+		ZIndex = 2,
+		Size = UDim2.new(1,0,0,30),
+		BackgroundTransparency = 2
+	})
+
+	self2.tip = self:Create("TextLabel", {
+		Name = "TopbarTip",
+		ZIndex = 2,
+		Size = UDim2.new(1, -30, 0, 30),
+		Position = UDim2.new(0, 30, 0, 0),
+		Text = "Press '".. string.sub(tostring(self.ToggleKey), 14) .."' to hide this menu",
+		Font = Enum.Font.GothamSemibold,
+		TextSize = 13,
+		TextXAlignment = Enum.TextXAlignment.Left,
+		BackgroundTransparency = 1,
+		TextColor3 = theme.text_color,
+	})
+	
+	if projectName then
+		self2.tip.Text = projectName
+	else
+		self2.tip.Text = "Press '".. string.sub(tostring(self.ToggleKey), 14) .."' to hide this menu"
+	end
+    
+    function finity.settitle(text)
+        self2.tip.Text = tostring(text)
+    end
+
+	local separator = self:Create("Frame", {
+		Name = "Separator",
+		BackgroundColor3 = theme.separator_color,
+		BorderSizePixel = 0,
+		Position = UDim2.new(0, 118, 0, 30),
+		Size = UDim2.new(0, 1, 1, -30),
+		ZIndex = 6,
+	})
+	separator.Parent = self2.container
+	separator = nil
+
+	local separator = self:Create("Frame", {
+		Name = "Separator",
+		BackgroundColor3 = theme.separator_color,
+		BorderSizePixel = 0,
+		Position = UDim2.new(0, 0, 0, 30),
+		Size = UDim2.new(1, 0, 0, 1),
+		ZIndex = 6,
+	})
+	separator.Parent = self2.container
+	separator = nil
+
+	local uipagelayout = self:Create("UIPageLayout", {
+		Padding = UDim.new(0, 10),
+		FillDirection = Enum.FillDirection.Vertical,
+		TweenTime = 0.7,
+		EasingStyle = Enum.EasingStyle.Quad,
+		EasingDirection = Enum.EasingDirection.InOut,
+		SortOrder = Enum.SortOrder.LayoutOrder,
+	})
+	uipagelayout.Parent = self2.categories
+	uipagelayout = nil
+
+	local uipadding = self:Create("UIPadding", {
+		PaddingTop = UDim.new(0, 3),
+		PaddingLeft = UDim.new(0, 2)
+	})
+	uipadding.Parent = self2.sidebar
+	uipadding = nil
+
+	local uilistlayout = self:Create("UIListLayout", {
+		SortOrder = Enum.SortOrder.LayoutOrder
+	})
+	uilistlayout.Parent = self2.sidebar
+	uilistlayout = nil
+
+	function self2:Category(name)
+		local category = {}
+		
+		category.button = finity:Create("TextButton", {
+			Name = name,
+			BackgroundColor3 = theme.category_button_background,
+			BackgroundTransparency = 1,
+			BorderMode = Enum.BorderMode.Inset,
+			BorderColor3 = theme.category_button_border,
+			Size = UDim2.new(1, -4, 0, 25),
+			ZIndex = 2,
+			AutoButtonColor = false,
+			Font = Enum.Font.GothamSemibold,
+			Text = name,
+			TextColor3 = theme.text_color,
+			TextSize = 14
+		})
+
+		category.container = finity:Create("ScrollingFrame", {
+			Name = name,
+			BackgroundTransparency = 1,
+			ScrollBarThickness = 4,
+			BorderSizePixel = 0,
+			Size = UDim2.new(1, 0, 1, 0),
+			ZIndex = 2,
+			CanvasSize = UDim2.new(0, 0, 0, 0),
+			ScrollBarImageColor3 = theme.scrollbar_color or Color3.fromRGB(118, 118, 121),
+			BottomImage = "rbxassetid://967852042",
+			MidImage = "rbxassetid://967852042",
+			TopImage = "rbxassetid://967852042",
+			ScrollBarImageTransparency = 1 --
+		})
+
+		category.hider = finity:Create("Frame", {
+			Name = "Hider",
+			BackgroundTransparency = 0, --
+			BorderSizePixel = 0,
+			BackgroundColor3 = theme.main_container,
+			Size = UDim2.new(1, 0, 1, 0),
+			ZIndex = 5
+		})
+
+		category.L = finity:Create("Frame", {
+			Name = "L",
+			BackgroundColor3 = Color3.new(1, 1, 1),
+			BackgroundTransparency = 1,
+			Position = UDim2.new(0, 10, 0, 3),
+			Size = UDim2.new(0.5, -20, 1, -3),
+			ZIndex = 2
+		})
+		
+		if not thinProject then
+			category.R = finity:Create("Frame", {
+				Name = "R",
+				AnchorPoint = Vector2.new(1, 0),
+				BackgroundColor3 = Color3.new(1, 1, 1),
+				BackgroundTransparency = 1,
+				Position = UDim2.new(1, -10, 0, 3),
+				Size = UDim2.new(0.5, -20, 1, -3),
+				ZIndex = 2
+			})
+		end
+		
+		if thinProject then
+			category.L.Size = UDim2.new(1, -20, 1, -3)
+		end
+		
+		if firstCategory then
+			finity.gs["TweenService"]:Create(category.hider, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+			finity.gs["TweenService"]:Create(category.container, TweenInfo.new(0.3), {ScrollBarImageTransparency = 0}):Play()
+		end
+		
+		do
+			local uilistlayout = finity:Create("UIListLayout", {
+				SortOrder = Enum.SortOrder.LayoutOrder
+			})
+	
+			local uilistlayout2 = finity:Create("UIListLayout", {
+				SortOrder = Enum.SortOrder.LayoutOrder
+			})
+			
+			local function computeSizeChange()
+				local largestListSize = 0
+				
+				largestListSize = uilistlayout.AbsoluteContentSize.Y
+				
+				if uilistlayout2.AbsoluteContentSize.Y > largestListSize then
+					largestListSize = largestListSize
+				end
+				
+				category.container.CanvasSize = UDim2.new(0, 0, 0, largestListSize + 5)
+			end
+			
+			uilistlayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(computeSizeChange)
+			uilistlayout2:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(computeSizeChange)
+			
+			uilistlayout.Parent = category.L
+			uilistlayout2.Parent = category.R
+		end
+		
+		category.button.MouseEnter:Connect(function()
+			finity.gs["TweenService"]:Create(category.button, TweenInfo.new(0.2), {BackgroundTransparency = 0.5}):Play()
+		end)
+		category.button.MouseLeave:Connect(function()
+			finity.gs["TweenService"]:Create(category.button, TweenInfo.new(0.2), {BackgroundTransparency = 1}):Play()
+		end)
+		category.button.MouseButton1Down:Connect(function()
+			for _, categoryf in next, self2.userinterface["Container"]["Categories"]:GetChildren() do
+				if categoryf:IsA("ScrollingFrame") then
+					if categoryf ~= category.container then
+						finity.gs["TweenService"]:Create(categoryf.Hider, TweenInfo.new(0.3), {BackgroundTransparency = 0}):Play()
+						finity.gs["TweenService"]:Create(categoryf, TweenInfo.new(0.3), {ScrollBarImageTransparency = 1}):Play()
+					end
+				end
+			end
+
+			finity.gs["TweenService"]:Create(category.button, TweenInfo.new(0.2), {BackgroundTransparency = 0.2}):Play()
+			finity.gs["TweenService"]:Create(category.hider, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+			finity.gs["TweenService"]:Create(category.container, TweenInfo.new(0.3), {ScrollBarImageTransparency = 0}):Play()
+
+			self2.categories["UIPageLayout"]:JumpTo(category.container)
+		end)
+		category.button.MouseButton1Up:Connect(function()
+			finity.gs["TweenService"]:Create(category.button, TweenInfo.new(0.2), {BackgroundTransparency = 1}):Play()
+		end)
+
+		category.container.Parent = self2.categories
+		category.button.Parent = self2.sidebar
+		
+		if not thinProject then
+			category.R.Parent = category.container
+		end
+		
+		category.L.Parent = category.container
+		category.hider.Parent = category.container
+
+		local function calculateSector()
+			if thinProject then
+				return "L"
+			end
+			
+			local R = #category.R:GetChildren() - 1
+			local L = #category.L:GetChildren() - 1
+
+			if L > R then
+				return "R"
+			else
+				return "L"
+			end
+		end
+
+		function category:Sector(name)
+			local sector = {}
+
+			sector.frame = finity:Create("Frame", {
+				Name = name,
+				BackgroundColor3 = Color3.new(1, 1, 1),
+				BackgroundTransparency = 1,
+				Size = UDim2.new(1, 0, 0, 25),
+				ZIndex = 2
+			})
+
+			sector.container = finity:Create("Frame", {
+				Name = "Container",
+				BackgroundColor3 = Color3.new(1, 1, 1),
+				BackgroundTransparency = 1,
+				Position = UDim2.new(0, 0, 0, 22),
+				Size = UDim2.new(1, -5, 1, -30),
+				ZIndex = 2
+			})
+
+			sector.title = finity:Create("TextLabel", {
+				Name = "Title",
+				Text = name,
+				BackgroundColor3 = Color3.new(1, 1, 1),
+				BackgroundTransparency = 1,
+				Size = UDim2.new(1, -5, 0, 25),
+				ZIndex = 2,
+				Font = Enum.Font.GothamSemibold,
+				TextColor3 = theme.text_color,
+				TextSize = 14,
+				TextXAlignment = Enum.TextXAlignment.Left,
+			})
+
+			local uilistlayout = finity:Create("UIListLayout", {
+				SortOrder = Enum.SortOrder.LayoutOrder
+			})
+
+            uilistlayout.Changed:Connect(function()
+                pcall(function()
+                    sector.frame.Size = UDim2.new(1, 0, 0, sector.container["UIListLayout"].AbsoluteContentSize.Y + 25)
+                    sector.container.Size = UDim2.new(1, 0, 0, sector.container["UIListLayout"].AbsoluteContentSize.Y)
+                end)
+			end)
+			uilistlayout.Parent = sector.container
+			uilistlayout = nil
+
+			function sector:Cheat(kind, name, callback, data)
+				local cheat = {}
+				cheat.value = nil
+
+				cheat.frame = finity:Create("Frame", {
+					Name = name,
+					BackgroundColor3 = Color3.new(1, 1, 1),
+					BackgroundTransparency = 1,
+					Size = UDim2.new(1, 0, 0, 25),
+					ZIndex = 2,
+				})
+
+				cheat.label = finity:Create("TextLabel", {
+					Name = "Title",
+					BackgroundColor3 = Color3.new(1, 1, 1),
+					BackgroundTransparency = 1,
+					Size = UDim2.new(1, 0, 1, 0),
+					ZIndex = 2,
+					Font = Enum.Font.Gotham,
+					TextColor3 = theme.text_color,
+					TextSize = 13,
+					Text = name,
+					TextXAlignment = Enum.TextXAlignment.Left
+				})
+
+				cheat.container	= finity:Create("Frame", {
+					Name = "Container",
+					AnchorPoint = Vector2.new(1, 0.5),
+					BackgroundColor3 = Color3.new(1, 1, 1),
+					BackgroundTransparency = 1,
+					Position = UDim2.new(1, 0, 0.5, 0),
+					Size = UDim2.new(0, 150, 0, 22),
+					ZIndex = 2,
+				})
+				
+				if kind then
+					if string.lower(kind) == "checkbox" or string.lower(kind) == "toggle" then
+						if data then
+							if data.enabled then
+                                cheat.value = true
+                            else
+                                cheat.value = false
+							end
+						end
+
+						cheat.checkbox = finity:Create("Frame", {
+							Name = "Checkbox",
+							AnchorPoint = Vector2.new(1, 0),
+							BackgroundColor3 = Color3.new(1, 1, 1),
+							BackgroundTransparency = 1,
+							Position = UDim2.new(1, 0, 0, 0),
+							Size = UDim2.new(0, 25, 0, 25),
+							ZIndex = 2,
+						})
+
+						cheat.outerbox = finity:Create("ImageLabel", {
+							Name = "Outer",
+							AnchorPoint = Vector2.new(1, 0.5),
+							BackgroundColor3 = Color3.new(1, 1, 1),
+							BackgroundTransparency = 1,
+							Position = UDim2.new(1, 0, 0.5, 0),
+							Size = UDim2.new(0, 20, 0, 20),
+							ZIndex = 2,
+							Image = "rbxassetid://3570695787",
+							ImageColor3 = theme.checkbox_outer,
+							ScaleType = Enum.ScaleType.Slice,
+							SliceCenter = Rect.new(100, 100, 100, 100),
+							SliceScale = 0.06,
+						})
+
+						cheat.checkboxbutton = finity:Create("ImageButton", {
+							AnchorPoint = Vector2.new(0.5, 0.5),
+							Name = "CheckboxButton",
+							BackgroundColor3 = Color3.new(1, 1, 1),
+							BackgroundTransparency = 1,
+							Position = UDim2.new(0.5, 0, 0.5, 0),
+							Size = UDim2.new(0, 14, 0, 14),
+							ZIndex = 2,
+							Image = "rbxassetid://3570695787",
+							ImageColor3 = theme.checkbox_inner,
+							ScaleType = Enum.ScaleType.Slice,
+							SliceCenter = Rect.new(100, 100, 100, 100),
+							SliceScale = 0.04
+						})
+
+						if data then
+							if data.enabled then
+								finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
+								finity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
+							end
+						end
+
+						cheat.checkboxbutton.MouseEnter:Connect(function()
+							local lightertheme = Color3.fromRGB((theme.checkbox_outer.R * 255) + 20, (theme.checkbox_outer.G * 255) + 20, (theme.checkbox_outer.B * 255) + 20)
+							finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = lightertheme}):Play()
+						end)
+						cheat.checkboxbutton.MouseLeave:Connect(function()
+							if not cheat.value then
+								finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_outer}):Play()
+							else
+								finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
+							end
+						end)
+						cheat.checkboxbutton.MouseButton1Down:Connect(function()
+							if cheat.value then
+								finity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_outer}):Play()
+							else
+								finity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
+							end
+						end)
+						cheat.checkboxbutton.MouseButton1Up:Connect(function()
+							cheat.value = not cheat.value
+
+							if callback then
+								local s, e = pcall(function()
+									callback(cheat.value)
+								end)
+
+								if not s then warn("error: ".. e) end
+							end
+
+							if cheat.value then
+								finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
+							else
+								finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_outer}):Play()
+								finity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_inner}):Play()
+							end
+                        end)
+                        function cheat:SetValue(value)
+                            cheat.value = value
+                            if cheat.value then
+                                finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
+								finity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
+                            else
+                                finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_outer}):Play()
+								finity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_inner}):Play()
+                            end
+                            if callback then
+                                local s, e = pcall(function()
+                                    callback(cheat.value)
+                                end)
+                                if not s then 
+                                    warn("error: "..e) 
+                                end
+                            end
+                        end
+                        
+
+						cheat.checkboxbutton.Parent = cheat.outerbox
+                        cheat.outerbox.Parent = cheat.container
+                    elseif string.lower(kind) == "color" or string.lower(kind) == "colorpicker" then
+                        cheat.value = Color3.new(1, 1, 1);
+
+						if data then
+							if data.color then
+								cheat.value = data.color
+							end
+                        end
+                        
+                        local hsvimage = "rbxassetid://4613607014"
+                        local lumienceimage = "rbxassetid://4613627894"
+                        
+                        cheat.hsvbar = finity:Create("ImageButton", {
+							AnchorPoint = Vector2.new(0.5, 0.5),
+							Name = "HSVBar",
+							BackgroundColor3 = Color3.new(1, 1, 1),
+							BackgroundTransparency = 1,
+							Position = UDim2.new(0.5, 0, 0.5, 0),
+							Size = UDim2.new(1, 0, 0, 6),
+							ZIndex = 2,
+                            Image = hsvimage
+                        })
+
+                        cheat.arrowpreview = finity:Create("ImageLabel", {
+                            Name = "ArrowPreview",
+                            BackgroundColor3 = Color3.new(1, 1, 1),
+                            BackgroundTransparency = 1,
+                            ImageTransparency = 0.25,
+                            Position = UDim2.new(0.5, 0, 0.5, -6),
+                            Size = UDim2.new(0, 6, 0, 6),
+                            ZIndex = 3,
+                            Image = "rbxassetid://2500573769",
+                            Rotation = -90
+                        })
+                        
+                        cheat.hsvbar.MouseButton1Down:Connect(function()
+                            local rs = finity.gs["RunService"]
+                            local uis = finity.gs["UserInputService"]local last = cheat.value;
+
+                            cheat.hsvbar.Image = hsvimage
+
+                            while uis:IsMouseButtonPressed'MouseButton1' do
+                                local mouseloc = uis:GetMouseLocation()
+                                local sx = cheat.arrowpreview.AbsoluteSize.X / 2;
+                                local offset = (mouseloc.x - cheat.hsvbar.AbsolutePosition.X) - sx
+                                local scale = offset / cheat.hsvbar.AbsoluteSize.X
+                                local position = math.clamp(offset, -sx, cheat.hsvbar.AbsoluteSize.X - sx) / cheat.hsvbar.AbsoluteSize.X
+
+                                finity.gs["TweenService"]:Create(cheat.arrowpreview, TweenInfo.new(0.1), {Position = UDim2.new(position, 0, 0.5, -6)}):Play()
+                                
+                                cheat.value = Color3.fromHSV(math.clamp(scale, 0, 1), 1, 1)
+
+                                if cheat.value ~= last then
+                                    last = cheat.value
+                                    
+                                    if callback then
+                                        local s, e = pcall(function()
+                                            callback(cheat.value)
+                                        end)
+        
+                                        if not s then warn("error: ".. e) end
+                                    end
+                                end
+
+                                rs.RenderStepped:wait()
+                            end
+                        end)
+                        function cheat:SetValue(value)
+                            cheat.hsvbar.Image = hsvimage
+                            finity.gs["TweenService"]:Create(cheat.arrowpreview, TweenInfo.new(0.1), {Position = UDim2.new(position, 0, 0.5, -6)}):Play()
+                        end
+                        cheat.hsvbar.MouseButton2Down:Connect(function()
+                            local rs = finity.gs["RunService"]
+                            local uis = finity.gs["UserInputService"]
+                            local last = cheat.value;
+
+                            cheat.hsvbar.Image = lumienceimage
+
+                            while uis:IsMouseButtonPressed'MouseButton2' do
+                                local mouseloc = uis:GetMouseLocation()
+                                local sx = cheat.arrowpreview.AbsoluteSize.X / 2
+                                local offset = (mouseloc.x - cheat.hsvbar.AbsolutePosition.X) - sx
+                                local scale = offset / cheat.hsvbar.AbsoluteSize.X
+                                local position = math.clamp(offset, -sx, cheat.hsvbar.AbsoluteSize.X - sx) / cheat.hsvbar.AbsoluteSize.X
+
+                                finity.gs["TweenService"]:Create(cheat.arrowpreview, TweenInfo.new(0.1), {Position = UDim2.new(position, 0, 0.5, -6)}):Play()
+                                
+                                cheat.value = Color3.fromHSV(1, 0, 1 - math.clamp(scale, 0, 1))
+
+                                if cheat.value ~= last then
+                                    last = cheat.value
+
+                                    if callback then
+                                        local s, e = pcall(function()
+                                            callback(cheat.value)
+                                        end)
+        
+                                        if not s then warn("error: ".. e) end
+                                    end
+                                end
+
+                                rs.RenderStepped:wait()
+                            end
+                        end)
+
+                        function cheat:SetValue(value)
+							cheat.value = value
+							
+							if callback then
+								local s, e = pcall(function()
+									callback(cheat.value)
+								end)
+
+								if not s then warn("error: ".. e) end
+							end
+                        end
+
+						cheat.hsvbar.Parent = cheat.container
+                        cheat.arrowpreview.Parent = cheat.hsvbar
+                        
+					elseif string.lower(kind) == "dropdown" then
+						if data then
+							if data.default then
+								cheat.value = data.default
+							elseif data.options then
+								cheat.value = data.options[1]
+							else
+								cheat.value = "None"
+							end
+						end
+						
+						local options
+						
+						if data and data.options then
+							options = data.options
+						end
+
+						cheat.dropped = false
+
+						cheat.dropdown = finity:Create("ImageButton", {
+							Name = "Dropdown",
+							BackgroundColor3 = Color3.new(1, 1, 1),
+							BackgroundTransparency = 1,
+							Size = UDim2.new(1, 0, 1, 0),
+							ZIndex = 2,
+							Image = "rbxassetid://3570695787",
+							ImageColor3 = theme.dropdown_background,
+							ImageTransparency = 0.5,
+							ScaleType = Enum.ScaleType.Slice,
+							SliceCenter = Rect.new(100, 100, 100, 100),
+							SliceScale = 0.02
+						})
+
+						cheat.selected = finity:Create("TextLabel", {
+							Name = "Selected",
+							BackgroundColor3 = Color3.new(1, 1, 1),
+							BackgroundTransparency = 1,
+							Position = UDim2.new(0, 10, 0, 0),
+							Size = UDim2.new(1, -35, 1, 0),
+							ZIndex = 2,
+							Font = Enum.Font.Gotham,
+							Text = tostring(cheat.value),
+							TextColor3 = theme.dropdown_text,
+							TextSize = 13,
+							TextXAlignment = Enum.TextXAlignment.Left
+						})
+
+						cheat.list = finity:Create("ScrollingFrame", {
+							Name = "List",
+							BackgroundColor3 = theme.dropdown_background,
+							BackgroundTransparency = 0.2,
+							BorderSizePixel = 0,
+							Position = UDim2.new(0, 0, 1, 0),
+							Size = UDim2.new(1, 0, 0, 100),
+							ZIndex = 3,
+							BottomImage = "rbxassetid://967852042",
+							MidImage = "rbxassetid://967852042",
+							TopImage = "rbxassetid://967852042",
+							ScrollBarThickness = 4,
+							VerticalScrollBarInset = Enum.ScrollBarInset.None,
+							ScrollBarImageColor3 = theme.dropdown_scrollbar_color
+						})
+
+						local uilistlayout = finity:Create("UIListLayout", {
+							SortOrder = Enum.SortOrder.LayoutOrder,
+							Padding = UDim.new(0, 2)
+						})
+						uilistlayout.Parent = cheat.list
+						uilistlayout = nil
+						local uipadding = finity:Create("UIPadding", {
+							PaddingLeft = UDim.new(0, 2)
+						})
+						uipadding.Parent = cheat.list
+						uipadding = nil
+						
+						local function refreshOptions()
+							if cheat.dropped then
+								cheat.fadelist()
+							end	
+							
+							for _, child in next, cheat.list:GetChildren() do
+								if child:IsA("TextButton") then
+									child:Destroy()
+								end
+							end
+							
+							for _, value in next, options do
+								local button = finity:Create("TextButton", {
+									BackgroundColor3 = Color3.new(1, 1, 1),
+									BackgroundTransparency = 1,
+									Size = UDim2.new(1, 0, 0, 20),
+									ZIndex = 3,
+									Font = Enum.Font.Gotham,
+									Text = value,
+									TextColor3 = theme.dropdown_text,
+									TextSize = 13
+								})
+	
+								button.Parent = cheat.list
+	
+								button.MouseEnter:Connect(function()
+									finity.gs["TweenService"]:Create(button, TweenInfo.new(0.1), {TextColor3 = theme.dropdown_text_hover}):Play()
+								end)
+								button.MouseLeave:Connect(function()
+									finity.gs["TweenService"]:Create(button, TweenInfo.new(0.1), {TextColor3 = theme.dropdown_text}):Play()
+								end)
+								button.MouseButton1Click:Connect(function()
+									if cheat.dropped then
+										cheat.value = value
+										cheat.selected.Text = value
+	
+										cheat.fadelist()
+										
+										if callback then
+											local s, e = pcall(function()
+												callback(cheat.value)
+											end)
+	
+											if not s then warn("error: ".. e) end
+										end
+									end
+								end)
+								
+								
+								finity.gs["TweenService"]:Create(button, TweenInfo.new(0), {TextTransparency = 1}):Play()
+							end
+							
+							finity.gs["TweenService"]:Create(cheat.list, TweenInfo.new(0), {Size = UDim2.new(1, 0, 0, 0), Position = UDim2.new(0, 0, 1, 0), CanvasSize = UDim2.new(0, 0, 0, cheat.list["UIListLayout"].AbsoluteContentSize.Y), ScrollBarImageTransparency = 1, BackgroundTransparency = 1}):Play()
+						end
+						
+						
+						function cheat.fadelist()
+							cheat.dropped = not cheat.dropped
+
+							if cheat.dropped then
+								for _, button in next, cheat.list:GetChildren() do
+									if button:IsA("TextButton") then
+										finity.gs["TweenService"]:Create(button, TweenInfo.new(0.2), {TextTransparency = 0}):Play()
+									end
+								end
+
+								finity.gs["TweenService"]:Create(cheat.list, TweenInfo.new(0.2), {Size = UDim2.new(1, 0, 0, math.clamp(cheat.list["UIListLayout"].AbsoluteContentSize.Y, 0, 150)), Position = UDim2.new(0, 0, 1, 0), ScrollBarImageTransparency = 0, BackgroundTransparency = 0.5}):Play()
+							else
+								for _, button in next, cheat.list:GetChildren() do
+									if button:IsA("TextButton") then
+										finity.gs["TweenService"]:Create(button, TweenInfo.new(0.2), {TextTransparency = 1}):Play()
+									end
+								end
+
+								finity.gs["TweenService"]:Create(cheat.list, TweenInfo.new(0.2), {Size = UDim2.new(1, 0, 0, 0), Position = UDim2.new(0, 0, 1, 0), ScrollBarImageTransparency = 1, BackgroundTransparency = 1}):Play()
+							end
+						end
+
+						cheat.dropdown.MouseEnter:Connect(function()
+							finity.gs["TweenService"]:Create(cheat.selected, TweenInfo.new(0.1), {TextColor3 = theme.dropdown_text_hover}):Play()
+						end)
+						cheat.dropdown.MouseLeave:Connect(function()
+							finity.gs["TweenService"]:Create(cheat.selected, TweenInfo.new(0.1), {TextColor3 = theme.dropdown_text}):Play()
+						end)
+						cheat.dropdown.MouseButton1Click:Connect(function()
+							cheat.fadelist()
+						end)
+
+						refreshOptions()
+						
+						function cheat:RemoveOption(value)
+							local removed = false
+							for index, option in next, options do
+								if option == value then
+									table.remove(options, index)
+									removed = true
+									break
+								end
+							end
+							
+							if removed then
+								refreshOptions()
+							end
+							
+							return removed
+						end
+						
+						function cheat:AddOption(value)
+							table.insert(options, value)
+							
+							refreshOptions()
+						end
+						
+						function cheat:SetValue(value)
+							cheat.selected.Text = value
+							cheat.value = value
+							
+							if cheat.dropped then
+								cheat.fadelist()
+							end
+							
+							if callback then
+								local s, e = pcall(function()
+									callback(cheat.value)
+								end)
+
+								if not s then warn("error: ".. e) end
+							end
+						end
+
+						cheat.selected.Parent = cheat.dropdown
+						cheat.dropdown.Parent = cheat.container
+						cheat.list.Parent = cheat.container
+					elseif string.lower(kind) == "textbox" then
+						local placeholdertext = data and data.placeholder
+
+						cheat.background = finity:Create("ImageLabel", {
+							Name = "Background",
+							BackgroundColor3 = Color3.new(1, 1, 1),
+							BackgroundTransparency = 1,
+							Size = UDim2.new(1, 0, 1, 0),
+							ZIndex = 2,
+							Image = "rbxassetid://3570695787",
+							ImageColor3 = theme.textbox_background,
+							ImageTransparency = 0.5,
+							ScaleType = Enum.ScaleType.Slice,
+							SliceCenter = Rect.new(100, 100, 100, 100),
+							SliceScale = 0.02
+						})
+
+						cheat.textbox = finity:Create("TextBox", {
+							Name = "Textbox",
+							BackgroundColor3 = Color3.new(1, 1, 1),
+							BackgroundTransparency = 1,
+							Position = UDim2.new(0, 0, 0, 0),
+							Size = UDim2.new(1, 0, 1, 0),
+							ZIndex = 2,
+							Font = Enum.Font.Gotham,
+							Text = "",
+							TextColor3 = theme.textbox_text,
+							PlaceholderText = placeholdertext or "Value",
+							TextSize = 13,
+                            TextXAlignment = Enum.TextXAlignment.Center,
+                            ClearTextOnFocus = false
+						})
+
+						cheat.background.MouseEnter:Connect(function()
+							finity.gs["TweenService"]:Create(cheat.textbox, TweenInfo.new(0.1), {TextColor3 = theme.textbox_text_hover}):Play()
+						end)
+						cheat.background.MouseLeave:Connect(function()
+							finity.gs["TweenService"]:Create(cheat.textbox, TweenInfo.new(0.1), {TextColor3 = theme.textbox_text}):Play()
+						end)
+						cheat.textbox.Focused:Connect(function()
+							typing = true
+
+							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.textbox_background_hover}):Play()
+						end)
+						cheat.textbox.FocusLost:Connect(function()
+							typing = false
+
+							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.textbox_background}):Play()
+							finity.gs["TweenService"]:Create(cheat.textbox, TweenInfo.new(0.1), {TextColor3 = theme.textbox_text}):Play()
+
+							cheat.value = cheat.textbox.Text
+
+							if callback then
+								local s, e = pcall(function()
+									callback(cheat.value)
+								end)
+
+								if not s then warn("error: "..e) end
+                            end
+                        end)
+                        function cheat:SetValue(value)
+                            cheat.value = value
+                            cheat.textbox.Text = value
+                        end
+
+                        if data.default ~= nil then
+                            cheat:SetValue(data.default)
+                        end
+
+						cheat.background.Parent = cheat.container
+						cheat.textbox.Parent = cheat.container
+					elseif string.lower(kind) == "slider" then
+						cheat.value = 0
+
+						local suffix = data.suffix or ""
+						local minimum = data.min or 0
+                        local maximum = data.max or 1
+                        local default = data.default
+                        local precise = data.precise
+						
+						local moveconnection
+						local releaseconnection
+
+						cheat.sliderbar = finity:Create("ImageButton", {
+							Name = "Sliderbar",
+							AnchorPoint = Vector2.new(1, 0.5),
+							BackgroundColor3 = Color3.new(1, 1, 1),
+							BackgroundTransparency = 1,
+							Position = UDim2.new(1, 0, 0.5, 0),
+							Size = UDim2.new(1, 0, 0, 6),
+							ZIndex = 2,
+							Image = "rbxassetid://3570695787",
+							ImageColor3 = theme.slider_background,
+							ImageTransparency = 0.5,
+							ScaleType = Enum.ScaleType.Slice,
+							SliceCenter = Rect.new(100, 100, 100, 100),
+							SliceScale = 0.02,
+						})
+
+						cheat.numbervalue = finity:Create("TextLabel", {
+							Name = "Value",
+							AnchorPoint = Vector2.new(0, 0.5),
+							BackgroundColor3 = Color3.new(1, 1, 1),
+							BackgroundTransparency = 1,
+							Position = UDim2.new(0.5, 5, 0.5, 0),
+							Size = UDim2.new(1, 0, 0, 13),
+							ZIndex = 2,
+							Font = Enum.Font.Gotham,
+							TextXAlignment = Enum.TextXAlignment.Left,
+							Text = "",
+							TextTransparency = 1,
+							TextColor3 = theme.slider_text,
+							TextSize = 13,
+						})
+
+						cheat.visiframe = finity:Create("ImageLabel", {
+							Name = "Frame",
+							BackgroundColor3 = Color3.new(1, 1, 1),
+							BackgroundTransparency = 1,
+							Size = UDim2.new(0.5, 0, 1, 0),
+							ZIndex = 2,
+							Image = "rbxassetid://3570695787",
+							ImageColor3 = theme.slider_color,
+							ScaleType = Enum.ScaleType.Slice,
+							SliceCenter = Rect.new(100, 100, 100, 100),
+							SliceScale = 0.02
+                        })
+
+                        if data.default then
+                            local size = math.clamp(data.default - cheat.sliderbar.AbsolutePosition.X, 0, 150)
+							local percent = size / 150
+							local perc = default/maximum
+                            cheat.value = math.clamp(data.default, minimum, maximum)
+                            finity.gs["TweenService"]:Create(cheat.visiframe, TweenInfo.new(0.1), {
+								Size = UDim2.new(perc, 0, 1, 0),
+                            }):Play()
+                            if callback then
+								local s, e = pcall(function()
+									callback(math.clamp(data.default, minimum, maximum))
+								end)
+
+								if not s then warn("error: ".. e) end
+							end
+                        end
+
+                        function cheat:SetValue(value)
+                            local size = math.clamp(value - cheat.sliderbar.AbsolutePosition.X, 0, 150)
+							local percent = size / 150
+							local perc = value/(maximum + minimum)
+                            cheat.value = math.clamp(value, minimum, maximum)
+                            finity.gs["TweenService"]:Create(cheat.visiframe, TweenInfo.new(0.1), {
+								Size = UDim2.new(perc, 0, 1, 0),
+                            }):Play()
+                            if callback then
+								local s, e = pcall(function()
+									callback(math.clamp(value, minimum, maximum))
+								end)
+
+								if not s then warn("error: ".. e) end
+							end
+                        end
+
+						cheat.sliderbar.MouseButton1Down:Connect(function()
+							local size = math.clamp(mouse.X - cheat.sliderbar.AbsolutePosition.X, 0, 150)
+							local percent = size / 150
+
+							cheat.value = math.floor((minimum + (maximum - minimum) * percent) * 100) / 100
+							if precise then
+								cheat.numbervalue.Text = math.ceil(tostring(cheat.value)) .. suffix
+							else
+								cheat.numbervalue.Text = tostring(cheat.value) .. suffix
+							end
+
+							if callback then
+								local s, e = pcall(function()
+									if data.precise then
+										callback(cheat.value)
+									else
+										callback(math.ceil(cheat.value))
+									end
+								end)
+
+								if not s then warn("error: ".. e) end
+							end
+
+							finity.gs["TweenService"]:Create(cheat.visiframe, TweenInfo.new(0.1), {
+								Size = UDim2.new(size / 150, 0, 1, 0),
+								ImageColor3 = theme.slider_color_sliding
+							}):Play()
+
+							finity.gs["TweenService"]:Create(cheat.numbervalue, TweenInfo.new(0.1), {
+								Position = UDim2.new(size / 150, 5, 0.5, 0),
+								TextTransparency = 0
+							}):Play()
+
+							moveconnection = mouse.Move:Connect(function()
+								local size = math.clamp(mouse.X - cheat.sliderbar.AbsolutePosition.X, 0, 150)
+								local percent = size / 150
+
+								cheat.value = math.floor((minimum + (maximum - minimum) * percent) * 100) / 100
+								if precise then
+									cheat.numbervalue.Text = math.ceil(tostring(cheat.value)) .. suffix
+								else
+									cheat.numbervalue.Text = tostring(cheat.value) .. suffix
+								end
+
+								if callback then
+                                    local s, e = pcall(function()
+                                        if data.precise then
+                                            callback(math.ceil(cheat.value))
+                                        else
+                                            callback(cheat.value)
+                                        end
+									end)
+
+									if not s then warn("error: ".. e) end
+								end
+
+								finity.gs["TweenService"]:Create(cheat.visiframe, TweenInfo.new(0.1), {
+									Size = UDim2.new(size / 150, 0, 1, 0),
+								ImageColor3 = theme.slider_color_sliding
+                                }):Play()
+                                
+                                local Position = UDim2.new(size / 150, 5, 0.5, 0);
+
+                                if Position.Width.Scale >= 0.6 then
+                                    Position = UDim2.new(1, -cheat.numbervalue.TextBounds.X, 0.5, 10);
+                                end
+
+								finity.gs["TweenService"]:Create(cheat.numbervalue, TweenInfo.new(0.1), {
+									Position = Position,
+									TextTransparency = 0
+								}):Play()
+							end)
+
+							releaseconnection = finity.gs["UserInputService"].InputEnded:Connect(function(Mouse)
+								if Mouse.UserInputType == Enum.UserInputType.MouseButton1 then
+
+									finity.gs["TweenService"]:Create(cheat.visiframe, TweenInfo.new(0.1), {
+										ImageColor3 = theme.slider_color
+									}):Play()
+
+									finity.gs["TweenService"]:Create(cheat.numbervalue, TweenInfo.new(0.1), {
+										TextTransparency = 1
+									}):Play()
+
+									moveconnection:Disconnect()
+									moveconnection = nil
+									releaseconnection:Disconnect()
+									releaseconnection = nil
+								end
+							end)
+						end)
+
+						cheat.visiframe.Parent = cheat.sliderbar
+						cheat.numbervalue.Parent = cheat.sliderbar
+						cheat.sliderbar.Parent = cheat.container
+					elseif string.lower(kind) == "button" then
+						local button_text = data and data.text
+
+						cheat.background = finity:Create("ImageLabel", {
+							Name = "Background",
+							BackgroundColor3 = Color3.new(1, 1, 1),
+							BackgroundTransparency = 1,
+							Size = UDim2.new(1, 0, 1, 0),
+							ZIndex = 2,
+							Image = "rbxassetid://3570695787",
+							ImageColor3 = theme.button_background,
+							ImageTransparency = 0.5,
+							ScaleType = Enum.ScaleType.Slice,
+							SliceCenter = Rect.new(100, 100, 100, 100),
+							SliceScale = 0.02
+						})
+
+						cheat.button = finity:Create("TextButton", {
+							Name = "Button",
+							BackgroundColor3 = Color3.new(1, 1, 1),
+							BackgroundTransparency = 1,
+							Position = UDim2.new(0, 0, 0, 0),
+							Size = UDim2.new(1, 0, 1, 0),
+							ZIndex = 2,
+							Font = Enum.Font.Gotham,
+							Text = button_text or "Button",
+							TextColor3 = theme.textbox_text,
+							TextSize = 13,
+							TextXAlignment = Enum.TextXAlignment.Center
+						})
+
+						cheat.button.MouseEnter:Connect(function()
+							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background_hover}):Play()
+						end)
+						cheat.button.MouseLeave:Connect(function()
+							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background}):Play()
+						end)
+						cheat.button.MouseButton1Down:Connect(function()
+							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background_down}):Play()
+						end)
+						cheat.button.MouseButton1Up:Connect(function()
+							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background}):Play()
+							
+							if callback then
+								local s, e = pcall(function()
+									callback()
+								end)
+
+								if not s then warn("error: ".. e) end
+							end
+                        end)
+                        
+                        function cheat:Fire()
+                            if callback then
+								local s, e = pcall(function()
+									callback()
+								end)
+
+								if not s then warn("error: ".. e) end
+							end
+                        end
+
+						cheat.background.Parent = cheat.container
+						cheat.button.Parent = cheat.container
+					
+					elseif string.lower(kind) == "keybind" or string.lower(kind) == "bind" then
+                        local callback_bind = data and data.bind
+						local connection
+						cheat.holding = false
+						
+						cheat.background = finity:Create("ImageLabel", {
+							Name = "Background",
+							BackgroundColor3 = Color3.new(1, 1, 1),
+							BackgroundTransparency = 1,
+							Size = UDim2.new(1, 0, 1, 0),
+							ZIndex = 2,
+							Image = "rbxassetid://3570695787",
+							ImageColor3 = theme.button_background,
+							ImageTransparency = 0.5,
+							ScaleType = Enum.ScaleType.Slice,
+							SliceCenter = Rect.new(100, 100, 100, 100),
+							SliceScale = 0.02
+						})
+
+						cheat.button = finity:Create("TextButton", {
+							Name = "Button",
+							BackgroundColor3 = Color3.new(1, 1, 1),
+							BackgroundTransparency = 1,
+							Position = UDim2.new(0, 0, 0, 0),
+							Size = UDim2.new(1, 0, 1, 0),
+							ZIndex = 2,
+							Font = Enum.Font.Gotham,
+							Text = "Click to Bind",
+							TextColor3 = theme.textbox_text,
+							TextSize = 13,
+							TextXAlignment = Enum.TextXAlignment.Center
+						})
+
+						cheat.button.MouseEnter:Connect(function()
+							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background_hover}):Play()
+						end)
+						cheat.button.MouseLeave:Connect(function()
+							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background}):Play()
+						end)
+						cheat.button.MouseButton1Down:Connect(function()
+							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background_down}):Play()
+                        end)
+                        cheat.button.MouseButton2Down:Connect(function()
+							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background_down}):Play()
+						end)
+						cheat.button.MouseButton1Up:Connect(function()
+							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background}):Play()
+							cheat.button.Text = "Press key..."
+							
+							if connection then
+								connection:Disconnect()
+								connection = nil
+							end
+							cheat.holding = false
+
+							connection = finity.gs["UserInputService"].InputBegan:Connect(function(Input)
+								if Input.UserInputType.Name == "Keyboard" and Input.KeyCode ~= finityData.ToggleKey and Input.KeyCode ~= Enum.KeyCode.Backspace then
+									cheat.button.Text = "Bound to " .. tostring(Input.KeyCode.Name)
+									
+                                    if connection then
+                                        connection:Disconnect()
+                                        connection = nil
+                                    end
+									
+									delay(0, function()
+										callback_bind = Input.KeyCode
+										cheat.value = Input.KeyCode
+
+										if callback then
+											local s, e = pcall(function()
+												callback(Input.KeyCode.Name)
+											end)
+			
+											if not s then warn("error: ".. e) end
+										end
+									end)
+								elseif Input.KeyCode == Enum.KeyCode.Backspace then
+									callback_bind = nil
+									cheat.button.Text = "Click to Bind"
+									cheat.value = nil
+									cheat.holding = false
+									delay(0, function()
+										if callback then
+											local s, e = pcall(function()
+												callback()
+											end)
+			
+											if not s then warn("error: ".. e) end
+										end
+									end)
+
+									connection:Disconnect()
+									connection = nil
+								elseif Input.KeyCode == finityData.ToggleKey then
+									cheat.button.Text = "Invalid Key";
+									cheat.value = nil
+								end
+							end)
+						end)
+						
+                        cheat.button.MouseButton2Up:Connect(function()
+							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background}):Play()
+							cheat.value = nil
+							callback_bind = nil
+							cheat.button.Text = "Click to Bind"
+							cheat.holding = false
+
+							delay(0, function()
+								if callback then
+									local s, e = pcall(function()
+										callback()
+									end)
+	
+									if not s then warn("error: ".. e) end
+								end
+							end)
+							
+                            if connection then
+                                connection:Disconnect()
+                                connection = nil
+                            end
+						end)
+                        
+						function cheat:SetValue(value)
+							if value ~= nil then
+                            	cheat.value = tostring(value)
+								cheat.button.Text = "Bound to " .. tostring(value)
+							else
+								cheat.value = nil
+								cheat.button.Text = "Click to Bind"
+							end
+                            local s, e = pcall(function()
+                                callback(value)
+                            end)
+                        end
+						
+						finity.gs["UserInputService"].InputBegan:Connect(function(Input, Process)
+							if callback_bind and Input.KeyCode == callback_bind and not Process then
+								cheat.holding = true
+								if callback then
+									local s, e = pcall(function()
+										callback(Input.KeyCode.Name)
+									end)
+	
+									if not s then warn("error: ".. e) end
+								end
+							end
+						end)
+						finity.gs["UserInputService"].InputBegan:Connect(function(Input, Process)
+							if callback_bind and Input.KeyCode == callback_bind and not Process then
+								cheat.holding = true
+							end
+						end)
+						
+						if callback_bind then
+							cheat.button.Text = "Bound to " .. tostring(callback_bind.Name)
+						end
+
+						cheat.background.Parent = cheat.container
+						cheat.button.Parent = cheat.container
+					end
+				end
+
+				cheat.frame.Parent = sector.container
+				cheat.label.Parent = cheat.frame
+				cheat.container.Parent = cheat.frame
+
+				return cheat
+			end
+
+			sector.frame.Parent = category[calculateSector()]
+			sector.container.Parent = sector.frame
+			sector.title.Parent = sector.frame
+
+			return sector
+		end
+		
+		firstCategory = false
+		
+		return category
+	end
+
+	self:addShadow(self2.container, 0)
+
+	self2.categories.ClipsDescendants = true
+	
+	if not finity.gs["RunService"]:IsStudio() then
+		self2.userinterface.Parent = self.gs["CoreGui"]
+	else
+		self2.userinterface.Parent = self.gs["Players"].LocalPlayer:WaitForChild("PlayerGui")
+	end
+	
+	self2.container.Parent = self2.userinterface
+	self2.categories.Parent = self2.container
+	self2.sidebar.Parent = self2.container
+	self2.topbar.Parent = self2.container
+	self2.tip.Parent = self2.topbar
+
+	return self2, finityData
+end
+if not getgenv().finity then
+    getgenv().finity = loadstring(game:HttpGet("https://pastebin.com/raw/Sa85yP6j"))()
+end
+getgenv().collision = {cam, workspace.Ray_Ignore, workspace.Debris}
+local a = game:GetService("Players")
+local b = loadstring(game:HttpGet("https://pastebin.com/raw/Q5AGjeQN"))()
+local c = a.LocalPlayer
+local d = c:GetMouse()
+local cam = workspace.CurrentCamera
+local e = getrawmetatable(game)
+local f = e.__namecall
+local g = e.__index
+local h = e.__newindex
+local i = Instance.new("Animation", workspace)
+local j = getsenv(c.PlayerGui.Client)
+local k = game:GetService("Lighting")
+i.AnimationId = "rbxassetid://0"
+getgenv().tocolor = function(l)
+    return Color3.fromRGB(l.R * 255, l.G * 255, l.B * 255)
+end
+getgenv().fromcolor = function(l)
+    return {R = l.R, G = l.G, B = l.B}
+end
+setreadonly(e, false)
+local m = {
+    "Plastic",
+    "Wood",
+    "Slate",
+    "Concrete",
+    "CorrodedMetal",
+    "DiamondPlate",
+    "Foil",
+    "Grass",
+    "Ice",
+    "Marble",
+    "Granite",
+    "Brick",
+    "Pebble",
+    "Sand",
+    "Fabric",
+    "SmoothPlastic",
+    "Metal",
+    "WoodPlanks",
+    "Cobblestone",
+    "Air",
+    "Water",
+    "Rock",
+    "Glacier",
+    "Snow",
+    "Sandstone",
+    "Mud",
+    "Basalt",
+    "Ground",
+    "CrackedLava",
+    "Neon",
+    "Glass",
+    "Asphalt",
+    "LeafyGrass",
+    "Salt",
+    "Limestone",
+    "Pavement",
+    "ForceField"
+}
+local n = {
+    "AmaticSC",
+    "Arcade",
+    "Arial",
+    "ArialBold",
+    "Bangers",
+    "Bodoni",
+    "Cartoon",
+    "Code",
+    "Creepster",
+    "DenkOne",
+    "Fantasy",
+    "Fondamento",
+    "FredokaOne",
+    "Garamond",
+    "Gotham",
+    "GothamBlack",
+    "GothamBold",
+    "GothamSemibold",
+    "GrenzeGotisch",
+    "Highway",
+    "IndieFlower",
+    "JosefinSans",
+    "Jura",
+    "Kalam",
+    "Legacy",
+    "LuckiestGuy",
+    "Merriweather",
+    "Michroma",
+    "Nunito",
+    "Oswald",
+    "PatrickHand",
+    "PermanentMarker",
+    "Roboto",
+    "RobotoCondensed",
+    "RobotoMono",
+    "Sarpanch",
+    "SciFi",
+    "SourceSans",
+    "SourceSansBold",
+    "SourceSansItalic",
+    "SourceSansLight",
+    "SourceSansSemibold",
+    "SpecialElite",
+    "TitilliumWeb",
+    "Ubuntu"
+}
+local o = {version = "0.0.1"}
+setmetatable(o, {})
+local p = function()
+end
+local q = function()
+    game:GetService("ReplicatedStorage").Events.ControlTurn:FireServer()
+end
+local r = j.speedupdate
+local s = {
+    ["Purple Clouds"] = {
+        SkyboxLf = "http://www.roblox.com/asset/?id=570557620",
+        SkyboxBk = "http://www.roblox.com/asset/?id=570557514",
+        SkyboxDn = "http://www.roblox.com/asset/?id=570557775",
+        SkyboxFt = "http://www.roblox.com/asset/?id=570557559",
+        SkyboxLf = "http://www.roblox.com/asset/?id=570557620",
+        SkyboxRt = "http://www.roblox.com/asset/?id=570557672",
+        SkyboxUp = "http://www.roblox.com/asset/?id=570557727"
+    },
+    ["Purple Nebula"] = {
+        SkyboxLf = "http://www.roblox.com/asset/?id=159454286",
+        SkyboxBk = "http://www.roblox.com/asset/?id=159454299",
+        SkyboxDn = "http://www.roblox.com/asset/?id=159454296",
+        SkyboxFt = "http://www.roblox.com/asset/?id=159454293",
+        SkyboxLf = "http://www.roblox.com/asset/?id=159454286",
+        SkyboxRt = "http://www.roblox.com/asset/?id=159454300",
+        SkyboxUp = "http://www.roblox.com/asset/?id=159454288"
+    },
+    ["Twilight"] = {
+        SkyboxLf = "rbxassetid://264909758",
+        SkyboxBk = "rbxassetid://264908339",
+        SkyboxDn = "rbxassetid://264907909",
+        SkyboxFt = "rbxassetid://264909420",
+        SkyboxLf = "rbxassetid://264909758",
+        SkyboxRt = "rbxassetid://264908886",
+        SkyboxUp = "rbxassetid://264907379"
+    },
+    ["Vaporwave Colors"] = {
+        SkyboxLf = "rbxassetid://1417494402",
+        SkyboxBk = "rbxassetid://1417494030",
+        SkyboxDn = "rbxassetid://1417494146",
+        SkyboxFt = "rbxassetid://1417494253",
+        SkyboxLf = "rbxassetid://1417494402",
+        SkyboxRt = "rbxassetid://1417494499",
+        SkyboxUp = "rbxassetid://1417494643"
+    }
+}
+function checkSky()
+    if o["Visuals"]["Self"]["Override_Skybox"] then
+        local t = k:FindFirstChildOfClass("Sky")
+        if t then
+            t.SkyboxLf = s[o["Visuals"]["Self"]["Skybox"]].SkyboxLf
+            t.SkyboxBk = s[o["Visuals"]["Self"]["Skybox"]].SkyboxBk
+            t.SkyboxDn = s[o["Visuals"]["Self"]["Skybox"]].SkyboxDn
+            t.SkyboxFt = s[o["Visuals"]["Self"]["Skybox"]].SkyboxFt
+            t.SkyboxRt = s[o["Visuals"]["Self"]["Skybox"]].SkyboxRt
+            t.SkyboxUp = s[o["Visuals"]["Self"]["Skybox"]].SkyboxUp
+        else
+            t = Instance.new("Sky")
+            t.SkyboxLf = s[o["Visuals"]["Self"]["Skybox"]].SkyboxLf
+            t.SkyboxBk = s[o["Visuals"]["Self"]["Skybox"]].SkyboxBk
+            t.SkyboxDn = s[o["Visuals"]["Self"]["Skybox"]].SkyboxDn
+            t.SkyboxFt = s[o["Visuals"]["Self"]["Skybox"]].SkyboxFt
+            t.SkyboxRt = s[o["Visuals"]["Self"]["Skybox"]].SkyboxRt
+            t.SkyboxUp = s[o["Visuals"]["Self"]["Skybox"]].SkyboxUp
+            t.Parent = k
+        end
+    end
+end
+function filterdebris()
+    for u, v in pairs(workspace.Debris:GetChildren()) do
+        spawn(
+            function()
+                if o["Visuals"]["Others"]["Dropped_Weapons"] and v:IsA("Part") then
+                    for u, w in pairs(v:GetChildren()) do
+                        if w:IsA("MeshPart") then
+                            w.TextureID = ""
+                            w.Material =
+                                o["Visuals"]["Others"]["Dropped_Weapons_Material"] == "Custom" and
+                                Enum.Material.SmoothPlastic or
+                                o["Visuals"]["Others"]["Dropped_Weapons_Material"] == "Flat" and Enum.Material.Neon or
+                                o["Visuals"]["Others"]["Dropped_Weapons_Material"] == "ForceField" and
+                                    Enum.Material.ForceField
+                            w.Color = tocolor(o["Visuals"]["Others"]["Dropped_Weapons_Color"])
+                            w.Transparency = o["Visuals"]["Others"]["Dropped_Weapons_Transparency"] / 100
+                        end
+                    end
+                end
+                if o["Visuals"]["Others"]["Disable_Bullet_Holes"] and v.Name == "Bullet" then
+                    v:Destroy()
+                end
+            end
+        )
+    end
+end
+local x = {}
+local y = {}
+local z
+local A = {
+    name = "Nixus Beta",
+    darkmode = true,
+    togglekey = Enum.KeyCode.Insert,
+    [1] = {
+        name = "Rage",
+        [1] = {
+            name = "Main",
+            [1] = {"Checkbox", "Enable Ragebot", p, {}, "Enabled"},
+            [2] = {"Dropdown", "Origin", p, {options = {"Camera", "Head", "Real Head"}}, "Origin"},
+            [3] = {"Checkbox", "Silent Aim", p, {}, "Silent Aim"},
+            [4] = {"Checkbox", "Autoshoot", p, {}, "Autoshoot"},
+            [5] = {"Slider", "Min Damage", p, {min = 1, max = 100, precise = true, default = 25}, "Min_Damage"},
+            [6] = {"Checkbox", "Autowall", p, {}, "Autowall"},
+            [7] = {
+                "Slider",
+                "Min Damage Behind Wall",
+                p,
+                {min = 1, max = 100, precise = true, default = 25},
+                "Min_Damage_Wall"
+            }
+        },
+        [2] = {
+            name = "Hitboxes",
+            [1] = {"Checkbox", "Head", p, {}, "Head"},
+            [2] = {"Checkbox", "Torso", p, {}, "Torso"},
+            [3] = {"Checkbox", "Pelvis", p, {}, "Pelvis"}
+        },
+        [3] = {
+            name = "Baim",
+            [1] = {"Checkbox", "On Head Break", p, {}, "On_Head_Break"},
+            [2] = {"Checkbox", "On HP", p, {}, "On_HP"},
+            [3] = {"Slider", "HP Amount", p, {min = 1, max = 100, precise = true, default = 25}, "HP_Amount"},
+            [4] = {"Keybind", "On Key", p, {}, "Key"}
+        },
+        [4] = {
+            name = "Exploits",
+            [1] = {"Checkbox", "Remove Recoil", p, {}, "Remove_Recoil"},
+            [2] = {"Checkbox", "Always Hit", p, {}, "Always_Hit"},
+            [3] = {"Dropdown", "Force Pitch", p, {options = {"Off", "Up", "Down", "Zero"}}, "Force_Pitch"},
+            [4] = {"Checkbox", "Boost Damage", p, {}, "Boost_Damage"},
+            [5] = {"Slider", "Multiplier", p, {min = 1, max = 15, precise = true, default = 1}, "Multiplier"},
+            [6] = {"Checkbox", "Double Tap", p, {}, "Double_Tap"},
+            [7] = {"Keybind", "DT Key", p, {}, "DT_Key"}
+        },
+        [5] = {
+            name = "Other",
+            [1] = {"Slider", "Max Penetrations", p, {min = 1, max = 4, precise = true, default = 4}, "Max_Penetrations"},
+            [2] = {"Checkbox", "Keybind Indicators", p, {}, "Indicators"},
+            [3] = {"Checkbox", "Safepoint (BETA)", p, {}, "Safepoint"},
+            [4] = {"Keybind", "Min DMG Override", p, {}, "DMG_Override"},
+            [5] = {
+                "Slider",
+                "Override Amount",
+                p,
+                {min = 1, max = 100, precise = true, default = 25},
+                "Override_Amount"
+            }
+        }
+    },
+    [2] = {
+        name = "Anti-Aim",
+        [1] = {
+            name = "Angles",
+            [1] = {"Checkbox", "Enable Anti-Aim", q, {}, "Enabled"},
+            [2] = {"Dropdown", "Pitch", q, {options = {"Off", "Down", "Zero", "Up", "Random"}}, "Pitch"},
+            [3] = {"Dropdown", "Yaw", p, {options = {"Off", "Left", "Right", "Back", "Custom", "Random"}}, "Yaw"},
+            [4] = {"Slider", "Custom Yaw", p, {min = 0, max = 360, precise = true, default = 180}, "Custom_Yaw"},
+            [5] = {"Checkbox", "Pitch Extend", q, {}, "Pitch_Extend"},
+            [6] = {"Checkbox", "At Targets", p, {}, "At Targets"}
+        },
+        [2] = {
+            name = "Extra",
+            [1] = {"Checkbox", "Disable On E", q, {}, "Disable_On_E"},
+            [2] = {"Checkbox", "Slide Walk", p, {}, "Slide_Walk"},
+            [3] = {"Checkbox", "No Animations", p, {}, "No_Animations"},
+            [4] = {"Checkbox", "No Head", p, {}, "No_Head"},
+            [5] = {"Checkbox", "Kill All", p, {}, "Kill_All"}
+        },
+        [3] = {
+            name = "Yaw",
+            [1] = {"Checkbox", "Enable Jitter", p, {}, "Jitter"},
+            [2] = {"Slider", "Jitter Range", p, {min = 0, max = 360, precise = true, default = 90}, "Jitter_Range"},
+            [3] = {"Checkbox", "Randomize Jitter", p, {}, "Randomize_Jitter"},
+            [4] = {
+                "Slider",
+                "Randomize Jitter Min",
+                p,
+                {min = 0, max = 360, precise = true, default = 0},
+                "Randomize_Jitter_Min"
+            },
+            [5] = {"Checkbox", "Enable Spin", p, {}, "Spin"},
+            [6] = {"Slider", "Spin Range", p, {min = 1, max = 360, precise = true, default = 360}, "Spin_Range"},
+            [7] = {"Slider", "Spin Increment", p, {min = 1, max = 270, precise = true, default = 1}, "Spin_Increment"}
+        },
+        [4] = {
+            name = "Exploits",
+            [1] = {"Checkbox", "Slow Walk", p, {}, "Slow_Walk"},
+            [2] = {"Slider", "Slow Walk Speed", p, {min = 1, max = 12, precise = true, default = 10}, "Slow_Walk_Speed"},
+            [3] = {"Keybind", "Slow Walk Bind", p, {}, "Slow_Walk_Bind"},
+            [4] = {"Checkbox", "Fake Duck", p, {}, "Fake_Duck"},
+            [5] = {"Keybind", "Fake Duck Bind", p, {}, "Fake_Duck_Bind"}
+        },
+        [5] = {
+            name = "Manual Binds",
+            [1] = {"Keybind", "Manual Left", p, {}, "Left"},
+            [2] = {"Keybind", "Manual Right", p, {}, "Right"}
+        }
+    },
+    [3] = {
+        name = "Visuals",
+        [1] = {
+            name = "Enemies",
+            [1] = {"Checkbox", "Box", p, {}, "Box"},
+            [2] = {"Slider", "Box X", p, {min = 40, max = 50, precise = true, default = 45}, "Box_X"},
+            [3] = {"Colorpicker", "Box Color", p, {color = Color3.fromRGB(255, 255, 255)}, "Box_Color"},
+            [4] = {"Checkbox", "Name", p, {}, "Name"},
+            [5] = {"Dropdown", "Name Font", p, {options = n, default = "GothamBold"}, "Name_Font"},
+            [6] = {"Colorpicker", "Name Color", p, {color = Color3.fromRGB(255, 255, 255)}, "Name_Color"},
+            [7] = {"Slider", "Name Font Size", p, {min = 10, max = 25, precise = true, default = 15}, "Name_Font_Size"},
+            [8] = {"Slider", "Name Y Offset", p, {min = 3.8, max = 4.5, precise = false, default = 3.8}, "Name_Offset"},
+            [9] = {"Checkbox", "Health", p, {}, "Health"},
+            [10] = {
+                "Slider",
+                "Health Thickness",
+                p,
+                {min = 1, max = 5, precise = true, default = 1},
+                "Health_Thickness"
+            },
+            [11] = {"Colorpicker", "Health Color", p, {color = Color3.fromRGB(0, 255, 0)}, "Health_Color"},
+            [12] = {
+                "Slider",
+                "Health X Offset",
+                p,
+                {min = 2.8, max = 4, precise = false, default = 2.8},
+                "Health_Offset"
+            }
+        },
+        [2] = {
+            name = "Self",
+            [1] = {"Checkbox", "Third Person", p, {}, "Third_Person"},
+            [2] = {"Keybind", "Third Person Key", p, {}, "Third_Person_Key"},
+            [3] = {
+                "Slider",
+                "Third Person Distance",
+                p,
+                {min = 7, max = 20, precise = true, default = 13},
+                "Third_Person_Distance"
+            },
+            [4] = {"Checkbox", "Override FOV", p, {}, "Override_FOV"},
+            [5] = {"Slider", "FOV Amount", p, {min = 30, max = 120, precise = true, default = 90}, "FOV_Amount"},
+            [6] = {"Checkbox", "Override Skybox", checkSky, {}, "Override_Skybox"},
+            [7] = {
+                "Dropdown",
+                "Skybox",
+                checkSky,
+                {options = {"Purple Clouds", "Purple Nebula", "Twilight", "Vaporwave Colors"}},
+                "Skybox"
+            },
+            [8] = {"Slider", "Scope Blend", p, {min = 0, max = 99, precise = true, default = 0}, "Scope_Blend"}
+        },
+        [3] = {
+            name = "Viewmodel",
+            [1] = {"Slider", "X Offset", p, {min = -400, max = 400, precise = true, default = 0}, "X_Offset"},
+            [2] = {"Slider", "Y Offset", p, {min = -400, max = 400, precise = true, default = 0}, "Y_Offset"},
+            [3] = {"Slider", "Z Offset", p, {min = -400, max = 400, precise = true, default = 0}, "Z_Offset"}
+        },
+        [4] = {
+            name = "Bullet Tracers",
+            [1] = {"Checkbox", "Enabled", p, {}, "Enabled"},
+            [2] = {"Dropdown", "Material", p, {options = {"Custom", "Flat", "ForceField"}}, "Material"},
+            [3] = {"Slider", "Life Time", p, {min = 0, max = 5, precise = true, default = 5}, "Life_Time"},
+            [4] = {"Colorpicker", "Tracer Color", p, {color = Color3.fromRGB(255, 255, 255)}, "Tracer_Color"},
+            [5] = {"Slider", "Thickness", p, {min = 1, max = 3, precise = true, default = 1}, "Thickness"}
+        },
+        [5] = {
+            name = "Chams",
+            [1] = {"Checkbox", "Enabled", p, {}, "Enabled"},
+            [2] = {"Slider", "Transparency", p, {min = 0, max = 100, precise = true, default = 0}, "Transparency"},
+            [3] = {"Colorpicker", "Color", p, {color = Color3.fromRGB(255, 255, 255)}, "Color"},
+            [4] = {"Checkbox", "Through Walls", p, {enabled = true}, "Through_Walls"}
+        },
+        [6] = {
+            name = "World",
+            [1] = {"Checkbox", "No Scope", p, {}, "No_Scope"},
+            [2] = {"Checkbox", "World Color", p, {}, "World_Color"},
+            [3] = {"Colorpicker", "Color", p, {color = Color3.fromRGB(255, 255, 255)}, "World_Color_Color"},
+            [4] = {"Checkbox", "No Flash", p, {}, "No_Flash"},
+            [5] = {"Checkbox", "Time of Day", p, {}, "Time_Of_Day"},
+            [6] = {"Slider", "Time", p, {min = 0, max = 24, precise = true, default = 12}, "Time"},
+            [7] = {"Checkbox", "Night Mode", p, {}, "Night_Mode"},
+            [8] = {
+                "Slider",
+                "Night Mode Strength",
+                p,
+                {min = 0, max = 255, precise = true, default = 0},
+                "Night_Mode_Strength"
+            },
+            [9] = {"Checkbox", "Hitsound", p, {}, "Hitsound"},
+            [10] = {
+                "Dropdown",
+                "Sound",
+                p,
+                {options = {"Skeet", "TF2", "Terraria", "Slap", "Custom"}},
+                "Hitsound_Sound"
+            },
+            [11] = {"Textbox", "Custom ID", p, {placeholder = "HITSOUND ID"}, "Custom_ID"},
+            [12] = {"Checkbox", "Fire Radius", p, {}, "Fire_Radius"},
+            [13] = {"Colorpicker", "Radius Color", p, {color = Color3.fromRGB(255, 0, 0)}, "Fire_Radius_Color"},
+            [14] = {"Checkbox", "Smoke Radius", p, {}, "Smoke_Radius"},
+            [15] = {"Colorpicker", "Radius Color", p, {color = Color3.fromRGB(255, 255, 255)}, "Smoke_Radius_Color"},
+            [16] = {
+                "Slider",
+                "Reduce Smoke Particles",
+                p,
+                {min = 0, max = 100, precise = true, default = 0, suffix = "%"},
+                "Reduce_Smoke"
+            },
+            [17] = {"Checkbox", "No Shadows", function(B)
+                    k.GlobalShadows = not B
+                end, {}, "No_Shadows"}
+        },
+        [7] = {
+            name = "Hand Chams",
+            [1] = {"Checkbox", "Enable Hand Chams", p, {}, "Enabled"},
+            [2] = {"Checkbox", "Override Gun", p, {}, "Gun"},
+            [3] = {"Colorpicker", "Color", p, {color = Color3.fromRGB(255, 255, 255)}, "Gun_Color"},
+            [4] = {"Dropdown", "Material", p, {options = {"Custom", "Flat", "ForceField"}}, "Gun_Material"},
+            [5] = {"Slider", "Transparency", p, {min = 0, max = 99, precise = true, default = 0}, "Gun_Transparency"},
+            [6] = {"Slider", "Reflectance", p, {min = 0, max = 5, precise = true, default = 0}, "Gun_Reflectance"},
+            [7] = {"Checkbox", "Override Accessories", p, {}, "Hands"},
+            [8] = {"Checkbox", "Remove Gloves", p, {}, "Remove_Gloves"},
+            [9] = {"Checkbox", "Remove Sleeves", p, {}, "Remove_Sleeves"},
+            [10] = {"Colorpicker", "Color", p, {color = Color3.fromRGB(255, 255, 255)}, "Hand_Color"},
+            [11] = {"Checkbox", "Override Skin", p, {}, "Skin"},
+            [12] = {"Colorpicker", "Color", p, {color = Color3.fromRGB(255, 255, 255)}, "Skin_Color"},
+            [13] = {"Slider", "Transparency", p, {min = 0, max = 100, precise = true, default = 0}, "Skin_Transparency"}
+        },
+        [8] = {
+            name = "Others",
+            [1] = {"Checkbox", "Dropped Weapon Chams", filterdebris, {}, "Dropped_Weapons"},
+            [2] = {
+                "Dropdown",
+                "Material",
+                filterdebris,
+                {options = {"Custom", "Flat", "ForceField"}},
+                "Dropped_Weapons_Material"
+            },
+            [3] = {
+                "Colorpicker",
+                "Color",
+                filterdebris,
+                {color = Color3.fromRGB(255, 255, 255)},
+                "Dropped_Weapons_Color"
+            },
+            [4] = {
+                "Slider",
+                "Transparency",
+                filterdebris,
+                {min = 0, max = 100, precise = true, default = 0},
+                "Dropped_Weapons_Transparency"
+            },
+            [5] = {"Checkbox", "Disable Blood", filterdebris, {}, "Disable_Blood"},
+            [6] = {"Checkbox", "Disable Bullet Holes", filterdebris, {}, "Disable_Bullet_Holes"}
+        },
+        [9] = {
+            name = "Bullet Impacts",
+            [1] = {"Checkbox", "Enabled", p, {}, "Enabled"},
+            [2] = {"Dropdown", "Material", p, {options = {"Custom", "Flat", "ForceField"}}, "Material"},
+            [3] = {"Slider", "Life Time", p, {min = 0, max = 5, precise = true, default = 5}, "Life_Time"},
+            [4] = {"Colorpicker", "Impact Color", p, {color = Color3.fromRGB(255, 255, 255)}, "Impact_Color"},
+            [5] = {"Slider", "Thickness", p, {min = 1, max = 3, precise = true, default = 1}, "Thickness"}
+        },
+        [10] = {
+            name = "Particles",
+            [1] = {"Checkbox", "Enabled", p, {}, "Enabled"},
+            [2] = {"Dropdown", "Type", p, {options = {"Rain", "Snow"}}, "Type"},
+            [3] = {"Colorpicker", "Color", p, {color = Color3.fromRGB(255, 255, 255)}, "Color"}
+        },
+        [11] = {
+            name = "Better Crosshair",
+            [1] = {"Checkbox", "Enabled", p, {}, "Enabled"},
+            [2] = {"Checkbox", "Override Length", p, {}, "Override_Length"},
+            [3] = {"Slider", "Length", p, {min = 1, max = 15, precise = true, default = 10}, "Length"},
+            [4] = {"Checkbox", "Border", p, {}, "Border"},
+            [5] = {"Slider", "Thickness", p, {min = 1, max = 3, precise = true, default = 1}, "Border_Thickness"},
+            [6] = {"Colorpicker", "Border Color", p, {color = Color3.fromRGB(0, 0, 0)}, "Border_Color"}
+        },
+        [12] = {
+            name = "Hit Chams",
+            [1] = {"Checkbox", "Enabled", p, {}, "Enabled"},
+            [2] = {"Dropdown", "Type", p, {options = {"Hitbox", "Full Body"}}, "Type"},
+            [3] = {"Colorpicker", "Color", p, {color = Color3.fromRGB(255, 255, 255)}, "Color"},
+            [4] = {"Slider", "Transparency", p, {min = 0, max = 100, precise = true, default = 0}, "Transparency"},
+            [5] = {"Slider", "Life Time", p, {min = 1, max = 10, precise = true, default = 5}, "Life Time"}
+        },
+        [13] = {name = "Bomb Settings"}
+    },
+    [4] = {
+        name = "Misc",
+        [1] = {
+            name = "Bunny Hop",
+            [1] = {"Checkbox", "Enabled", p, {}, "Enabled"},
+            [2] = {"Slider", "Speed", p, {min = 15, max = 150, precise = true, default = 33}, "Speed"}
+        },
+        [2] = {
+            name = "Anti-Damage",
+            [1] = {"Checkbox", "Anti-Fire Damage", p, {}, "Anti_Fire"},
+            [2] = {"Checkbox", "Anti-Fall Damage", p, {}, "Anti_Fall"}
+        }
+    },
+    [5] = {
+        name = "Configs",
+        [1] = {
+            name = "Configs",
+            [1] = {"Textbox", "Config Name", p, {placeholder = "CONFIG NAME"}, "Configs_Name"},
+            [2] = {"Button", "Save Config", function()
+                    game:GetService("Nixus Beta").ConfigEvent:Fire("SaveConfig", o["Configs"]["Configs"]["Configs_Name"])
+                end, {text = "Save"}, "Save_Config"},
+            [3] = {"Button", "Load Config", function()
+                    game:GetService("Nixus Beta").ConfigEvent:Fire("LoadConfig", o["Configs"]["Configs"]["Configs_Name"])
+                end, {text = "Load"}, "Load_Config"}
+        }
+    }
+}
+local C
+local D = false
+if A then
+    local E = finity.new(A.darkmode, A.name)
+    E.ChangeToggleKey(A.togglekey)
+    if not game:FindFirstChild(A.name) then
+        local F, G, H = Instance.new("Model"), Instance.new("BindableEvent"), Instance.new("BindableEvent")
+        F.Name, G.Name, H.Name = A.name, "ConfigEvent", "ApiEvent"
+        local I = Instance.new("BindableEvent")
+        I.Name = "LuaEvent"
+        I.Parent = F
+        F.Parent, G.Parent, H.Parent = game, F, F
+    end
+    game[A.name].ConfigEvent.Event:Connect(
+        function(...)
+            local J = {...}
+            if J[2] and D then
+                if J[1] == "SaveConfig" then
+
+                    writefile('Nixus Configs/'..J[2]..'.txt', game:GetService("HttpService"):JSONEncode(o))
+                end
+            end
+        end
+    )
+    for K = 1, #A do
+        local L = E:Category(A[K].name)
+        o[A[K].name] = {}
+        for M = 1, #A[K] do
+            local N = L:Sector(A[K][M].name)
+            o[A[K].name][A[K][M].name] = {}
+            if A[K][M].isLua then
+                z = N
+            end
+            for v = 1, #A[K][M] do
+                local y = A[K][M][v]
+                local O =
+                    N:Cheat(
+                    y[1],
+                    y[2],
+                    function(P)
+                        o[A[K].name][A[K][M].name][y[5]] = y[1] == "Colorpicker" and fromcolor(P) or P
+                        y[3](P)
+                    end,
+                    y[4]
+                )
+                o[A[K].name][A[K][M].name][y[5]] = y[1] == "Colorpicker" and fromcolor(O.value) or O.value
+                game[A.name].ConfigEvent.Event:Connect(
+                    function(...)
+                        local J = {...}
+                        if D and J[1] == "LoadConfig" then
+                            if J[2] and isfile('Nixus Configs/'..J[2]..'.txt') then
+                                local Q = game:GetService("HttpService"):JSONDecode(readfile('Nixus Configs/'..J[2]..'.txt'))
+                                if Q[A[K].name][A[K][M].name] ~= nil and Q[A[K].name][A[K][M].name][y[5]] ~= nil then
+                                    if y[1] ~= "Button" and y[1] ~= "Colorpicker" then
+                                        O:SetValue(Q[A[K].name][A[K][M].name][y[5]])
+                                    end
+                                    if y[1] == "Colorpicker" then
+                                        O:SetValue(tocolor(Q[A[K].name][A[K][M].name][y[5]]))
+                                    end
+                                end
+                            end
+                        end
+                    end
+                )
+            end
+            D = true
+        end
+    end
+end
+repeat
+    wait()
+until D
+y.api = function()
+    local H = game[A.name].ApiEvent
+    H.Event:Connect(
+        function(...)
+        end
+    )
+    local I = game[A.name].LuaEvent
+    I.Event:Connect(
+        function(...)
+            local J = {...}
+            if isfile(J[2]) and readfile(J[2]).lua.onLoad ~= nil and readfile(J[2]).lua.onUnload ~= nil then
+                local R = readfile(J[2])
+                if J[1] == "Load" then
+                    R.onLoad()
+                else
+                    R.onUnload()
+                end
+            end
+        end
+    )
+end
+y.initiate = function()
+    local S
+    local T = false
+    y.api()
+    game:GetService("ReplicatedStorage").Viewmodels["v_M4A4"].AnimSaves:Destroy()
+    local U = {
+        side = "none",
+        filter = false,
+        thirdperson = false,
+        edown = false,
+        jitter = false,
+        spin = 0,
+        hopping = false,
+        hit = tick(),
+        dt = false,
+        candt = false,
+        forcebaim = false,
+        direc = "back"
+    }
+    local V = {
+        Skeet = "rbxassetid://5447626464",
+        TF2 = "rbxassetid://5043539486",
+        Terraria = "rbxassetid://1347140027",
+        Slap = "rbxassetid://2330776461",
+        Custom = ""
+    }
+    e.__namecall =
+        newcclosure(
+        function(self, ...)
+            local W = tostring(getnamecallmethod())
+            local J = {...}
+            if W == "GetService" then
+                if J[1] == A.name then
+                    return game[A.name]
+                end
+            end
+            if W == "SetPrimaryPartCFrame" then
+                J[1] =
+                    J[1] *
+                    CFrame.new(
+                        o["Visuals"]["Viewmodel"]["X_Offset"] / 200,
+                        -o["Visuals"]["Viewmodel"]["Y_Offset"] / 200,
+                        -o["Visuals"]["Viewmodel"]["Z_Offset"] / 100
+                    )
+            end
+            if W == "FireServer" and self.Name == "HitPart" then
+                if o["Rage"]["Exploits"]["Boost_Damage"] then
+                    J[8] = J[8] * o["Rage"]["Exploits"]["Multiplier"]
+                end
+                if o["Rage"]["Exploits"]["Always_Hit"] and S ~= nil then
+                    J[1] = S
+                    J[2] = S.Position
+                end
+                spawn(
+                    function()
+                        if o["Visuals"]["World"]["Hitsound"] then
+                            if J[1].Parent ~= nil and J[1].Parent.Parent == workspace then
+                                if V[o["Visuals"]["World"]["Hitsound_Sound"]] == "Custom" then
+                                    V["Custom"] = tostring(o["Visuals"]["World"]["Custom_ID"])
+                                end
+                                local X = Instance.new("Sound", workspace)
+                                X.SoundId = V[o["Visuals"]["World"]["Hitsound_Sound"]]
+                                X.PlayOnRemove = true
+                                X.Volume = 3
+                                X:Destroy()
+                            end
+                        end
+                    end
+                )
+                spawn(
+                    function()
+                        if
+                            o["Visuals"]["Hit Chams"]["Enabled"] and J[1].Parent ~= nil and
+                                J[1].Parent.Parent == workspace
+                         then
+                            if o["Visuals"]["Hit Chams"]["Type"] == "Hitbox" then
+                                local w = Instance.new("Part")
+                                w.CFrame = J[1].CFrame
+                                w.Anchored = true
+                                w.CanCollide = false
+                                w.Material = Enum.Material.ForceField
+                                w.Color = tocolor(o["Visuals"]["Hit Chams"]["Color"])
+                                w.Size = J[1].Size
+                                w.Transparency = o["Visuals"]["Hit Chams"]["Transparency"] / 100
+                                w.Parent = workspace.Debris
+                                wait(o["Visuals"]["Hit Chams"]["Life Time"])
+                                w:Destroy()
+                            else
+                                for u, Y in pairs(J[1].Parent:GetChildren()) do
+                                    if Y:IsA("MeshPart") or Y.Name == "Head" then
+                                        spawn(
+                                            function()
+                                                local w = Instance.new("Part")
+                                                w.CFrame = Y.CFrame
+                                                w.Anchored = true
+                                                w.CanCollide = false
+                                                w.Material = Enum.Material.ForceField
+                                                w.Color = tocolor(o["Visuals"]["Hit Chams"]["Color"])
+                                                w.Transparency = o["Visuals"]["Hit Chams"]["Transparency"] / 100
+                                                w.Size = Y.Size
+                                                w.Parent = workspace.Debris
+                                                wait(o["Visuals"]["Hit Chams"]["Life Time"])
+                                                w:Destroy()
+                                            end
+                                        )
+                                    end
+                                end
+                            end
+                        end
+                    end
+                )
+            end
+            if W == "FireServer" and self.Name == "HitPart" and tick() - U.hit > 0.005 then
+                U.hit = tick()
+                spawn(
+                    function()
+                        if o["Visuals"]["Bullet Tracers"]["Enabled"] then
+                            local Z = Instance.new("Part")
+                            Z.Anchored = true
+                            Z.CanCollide = false
+                            Z.Material =
+                                o["Visuals"]["Bullet Tracers"]["Material"] == "Custom" and Enum.Material.SmoothPlastic or
+                                o["Visuals"]["Bullet Tracers"]["Material"] == "Flat" and Enum.Material.Neon or
+                                o["Visuals"]["Bullet Tracers"]["Material"] == "ForceField" and Enum.Material.ForceField
+                            Z.Color = tocolor(o["Visuals"]["Bullet Tracers"]["Tracer_Color"])
+                            Z.Size =
+                                Vector3.new(
+                                o["Visuals"]["Bullet Tracers"]["Thickness"] / 10,
+                                o["Visuals"]["Bullet Tracers"]["Thickness"] / 10,
+                                (cam.CFrame.p - J[2]).magnitude
+                            )
+                            Z.CFrame = CFrame.new(cam.CFrame.p, J[2]) * CFrame.new(0, 0, -Z.Size.Z / 2)
+                            Z.Parent = workspace.Debris
+                            wait(o["Visuals"]["Bullet Tracers"]["Life_Time"])
+                            Z:Destroy()
+                        end
+                    end
+                )
+                spawn(
+                    function()
+                        if o["Visuals"]["Bullet Impacts"]["Enabled"] then
+                            local w = Instance.new("Part")
+                            w.Anchored = true
+                            w.CanCollide = false
+                            w.Material =
+                                o["Visuals"]["Bullet Impacts"]["Material"] == "Custom" and Enum.Material.SmoothPlastic or
+                                o["Visuals"]["Bullet Impacts"]["Material"] == "Flat" and Enum.Material.Neon or
+                                o["Visuals"]["Bullet Impacts"]["Material"] == "ForceField" and Enum.Material.ForceField
+                            w.Size =
+                                Vector3.new(
+                                o["Visuals"]["Bullet Impacts"]["Thickness"] / 10,
+                                o["Visuals"]["Bullet Impacts"]["Thickness"] / 10,
+                                o["Visuals"]["Bullet Impacts"]["Thickness"] / 10
+                            )
+                            w.Position = J[2]
+                            w.Color = tocolor(o["Visuals"]["Bullet Impacts"]["Impact_Color"])
+                            w.Parent = workspace.Debris
+                            wait(o["Visuals"]["Bullet Impacts"]["Life_Time"])
+                            w:Destroy()
+                        end
+                    end
+                )
+            end
+            if W == "FindPartOnRayWithIgnoreList" and S ~= nil and J[2][7] ~= nil and j.gun ~= nil and j.gun ~= "none" then
+                if not checkcaller() or T then
+                    local _ =
+                        o["Rage"]["Main"]["Origin"] == "Camera" and cam.CFrame.p or
+                        o["Rage"]["Main"]["Origin"] == "Head" and c.Character.Head.Position or
+                        o["Rage"]["Main"]["Origin"] == "Real Head" and
+                            c.Character.HumanoidRootPart.CFrame.p + Vector3.new(0, 1.4, 0)
+                    J[1] = Ray.new(_, (S.CFrame.p - _).unit * math.clamp(j.gun.Range.Value, 5, 400))
+                end
+            end
+            if self.Name == "BURNME" then
+                if o["Misc"]["Anti-Damage"]["Anti_Fire"] then
+                    return
+                end
+            end
+            if self.Name == "FallDamage" then
+                if o["Misc"]["Anti-Damage"]["Anti_Fall"] then
+                    return
+                end
+            end
+            if W == "FireServer" and self.Name == "ControlTurn" then
+                if o["Anti-Aim"]["Angles"]["Enabled"] then
+                    if o["Anti-Aim"]["Angles"]["Pitch"] ~= nil then
+                        if
+                            o["Anti-Aim"]["Extra"]["Disable_On_E"] and not U.edown or
+                                not o["Anti-Aim"]["Extra"]["Disable_On_E"]
+                         then
+                            if o["Anti-Aim"]["Angles"]["Pitch"] == "Down" then
+                                J[1] = -1
+                                if o["Anti-Aim"]["Angles"]["Pitch_Extend"] then
+                                    J[1] = -1.2
+                                end
+                            end
+                            if o["Anti-Aim"]["Angles"]["Pitch"] == "Up" then
+                                J[1] = 1
+                                if o["Anti-Aim"]["Angles"]["Pitch_Extend"] then
+                                    J[1] = 1.2
+                                end
+                            end
+                            if o["Anti-Aim"]["Angles"]["Pitch"] == "Zero" then
+                                J[1] = 0
+                            end
+                            if o["Anti-Aim"]["Angles"]["Pitch"] == "Random" then
+                                J[1] = math.random(-1, 1)
+                                if o["Anti-Aim"]["Angles"]["Pitch_Extend"] then
+                                    J[1] = math.random(-1.2, 1.2)
+                                end
+                            end
+                        else
+                            J[1] = math.clamp(math.asin(cam.CFrame.LookVector.y), -1, 1)
+                        end
+                    end
+                end
+            end
+            if W == "LoadAnimation" and self.Name == "Humanoid" then
+                if o["Anti-Aim"]["Extra"]["Slide_Walk"] then
+                    if string.find(J[1].Name, "Walk") or string.find(J[1].Name, "Run") then
+                        J[1] = i
+                    end
+                end
+                if o["Anti-Aim"]["Extra"]["No_Animations"] then
+                    J[1] = i
+                end
+            end
+            if W == "GetState" then
+                return Enum.HumanoidStateType.Physics
+            end
+            if W == "InvokeServer" and self.Name == "Hugh" then
+                return
+            end
+            return f(self, unpack(J))
+        end
+    )
+    e.__index =
+        newcclosure(
+        function(self, a0)
+            if not checkcaller() and a0 == "WalkSpeed" and self == c.Character.Humanoid then
+                if o["Anti-Aim"]["Exploits"]["Slow_Walk"] then
+                    if
+                        o["Anti-Aim"]["Exploits"]["Slow_Walk_Bind"] ~= nil and
+                            game:GetService("UserInputService"):IsKeyDown(o["Anti-Aim"]["Exploits"]["Slow_Walk_Bind"])
+                     then
+                        return o["Anti-Aim"]["Exploits"]["Slow_Walk_Speed"]
+                    end
+                end
+                if U.hopping then
+                    c.Character.Humanoid.WalkSpeed = o["Misc"]["Bunny Hop"]["Speed"]
+                    return 3
+                end
+            end
+            return g(self, a0)
+        end
+    )
+    e.__newindex =
+        newcclosure(
+        function(self, a1, a2)
+            if o["Anti-Aim"]["Exploits"]["Fake_Duck"] and self:IsA("Humanoid") and a1 == "CameraOffset" then
+                if
+                    o["Anti-Aim"]["Exploits"]["Fake_Duck_Bind"] ~= nil and
+                        game:GetService("UserInputService"):IsKeyDown(o["Anti-Aim"]["Exploits"]["Fake_Duck_Bind"])
+                 then
+                    a2 = Vector3.new(0, 0.05, 0)
+                end
+            end
+            return h(self, a1, a2)
+        end
+    )
+    local H = game[A.name].ApiEvent
+    y.keydown =
+        game:GetService("UserInputService").InputBegan:Connect(
+        function(a3, a4)
+            if o["Visuals"]["Self"]["Third_Person"] and o["Visuals"]["Self"]["Third_Person_Key"] ~= nil then
+                if a3.KeyCode == Enum.KeyCode[o["Visuals"]["Self"]["Third_Person_Key"]] then
+                    U.thirdperson = not U.thirdperson
+                end
+            end
+            if o["Anti-Aim"]["Manual Binds"]["Left"] ~= nil then
+                if a3.KeyCode == Enum.KeyCode[o["Anti-Aim"]["Manual Binds"]["Left"]] then
+                    if U.side == "left" then
+                        U.side = "none"
+                    else
+                        U.side = "left"
+                    end
+                end
+            end
+            if o["Anti-Aim"]["Manual Binds"]["Right"] ~= nil then
+                if a3.KeyCode == Enum.KeyCode[o["Anti-Aim"]["Manual Binds"]["Right"]] then
+                    if U.side == "right" then
+                        U.side = "none"
+                    else
+                        U.side = "right"
+                    end
+                end
+            end
+        end
+    )
+    y.keyup =
+        game:GetService("UserInputService").InputEnded:Connect(
+        function(a3, a4)
+        end
+    )
+    local a5 = j.firebullet
+    j.firebullet = function(self, ...)
+        local J = {...}
+        U.dt = J[1] ~= "SKEETBETACRACK" and true or false
+        if U.dt and U.candt then
+            game:GetService("RunService").RenderStepped:wait()
+            a5("SKEETBETACRACK")
+        end
+        return a5(self, unpack(J))
+    end
+    local a6 = j.updateads
+    j.updateads =
+        newcclosure(
+        function(self, ...)
+            local J = {...}
+            spawn(
+                function()
+                    if c.Character ~= nil then
+                        game:GetService("RunService").RenderStepped:wait()
+                        for u, w in pairs(c.Character:GetDescendants()) do
+                            if w:IsA("Part") or w:IsA("MeshPart") then
+                                if w.Transparency ~= 1 then
+                                    w.Transparency =
+                                        c.PlayerGui.GUI.Crosshairs.Scope.Visible == true and
+                                        o["Visuals"]["Self"]["Scope_Blend"] / 100 or
+                                        0
+                                end
+                            end
+                            if w:IsA("Accessory") then
+                                w.Handle.Transparency =
+                                    c.PlayerGui.GUI.Crosshairs.Scope.Visible == true and
+                                    o["Visuals"]["Self"]["Scope_Blend"] / 100 or
+                                    0
+                            end
+                        end
+                    end
+                end
+            )
+            return a6(self, ...)
+        end
+    )
+    k.ChildAdded:Connect(
+        function(a7)
+            if o["Visuals"]["Self"]["Override_Skybox"] and a7:IsA("Sky") then
+                local t = a7
+                t.SkyboxLf = s[o["Visuals"]["Self"]["Skybox"]].SkyboxLf
+                t.SkyboxBk = s[o["Visuals"]["Self"]["Skybox"]].SkyboxBk
+                t.SkyboxDn = s[o["Visuals"]["Self"]["Skybox"]].SkyboxDn
+                t.SkyboxFt = s[o["Visuals"]["Self"]["Skybox"]].SkyboxFt
+                t.SkyboxRt = s[o["Visuals"]["Self"]["Skybox"]].SkyboxRt
+                t.SkyboxUp = s[o["Visuals"]["Self"]["Skybox"]].SkyboxUp
+            end
+        end
+    )
+    workspace:WaitForChild("Ray_Ignore").ChildAdded:Connect(
+        function(v)
+            if v.Name == "Fires" then
+                v.ChildAdded:Connect(
+                    function(a8)
+                        if o["Visuals"]["World"]["Fire_Radius"] then
+                            a8.Transparency = 0.7
+                            a8.Color = tocolor(o["Visuals"]["World"]["Fire_Radius_Color"])
+                        end
+                    end
+                )
+            end
+            if v.Name == "Smokes" then
+                v.ChildAdded:Connect(
+                    function(a9)
+                        a9:WaitForChild("ParticleEmitter").Rate = 310 - o["Visuals"]["World"]["Reduce_Smoke"] * 3.1
+                        if o["Visuals"]["World"]["Smoke_Radius"] then
+                            a9.Transparency = 0
+                            a9.Material = Enum.Material.ForceField
+                            a9.Color = tocolor(o["Visuals"]["World"]["Smoke_Radius_Color"])
+                        end
+                    end
+                )
+            end
+        end
+    )
+    workspace.Debris.ChildAdded:Connect(
+        function(v)
+            spawn(
+                function()
+                    if o["Visuals"]["Others"]["Dropped_Weapons"] and v:IsA("Part") then
+                        for u, w in pairs(v:GetChildren()) do
+                            if w:IsA("MeshPart") then
+                                if w.Transparency ~= 1 then
+                                    w.TextureID = ""
+                                    w.Material =
+                                        o["Visuals"]["Others"]["Dropped_Weapons_Material"] == "Custom" and
+                                        Enum.Material.SmoothPlastic or
+                                        o["Visuals"]["Others"]["Dropped_Weapons_Material"] == "Flat" and
+                                            Enum.Material.Neon or
+                                        o["Visuals"]["Others"]["Dropped_Weapons_Material"] == "ForceField" and
+                                            Enum.Material.ForceField
+                                    w.Color = tocolor(o["Visuals"]["Others"]["Dropped_Weapons_Color"])
+                                    w.Transparency = o["Visuals"]["Others"]["Dropped_Weapons_Transparency"] / 100
+                                end
+                            end
+                            if w:IsA("Part") then
+                                if w.Transparency ~= 1 then
+                                    w.Material =
+                                        o["Visuals"]["Others"]["Dropped_Weapons_Material"] == "Custom" and
+                                        Enum.Material.SmoothPlastic or
+                                        o["Visuals"]["Others"]["Dropped_Weapons_Material"] == "Flat" and
+                                            Enum.Material.Neon or
+                                        o["Visuals"]["Others"]["Dropped_Weapons_Material"] == "ForceField" and
+                                            Enum.Material.ForceField
+                                    w.Color = tocolor(o["Visuals"]["Others"]["Dropped_Weapons_Color"])
+                                    w.Transparency = o["Visuals"]["Others"]["Dropped_Weapons_Transparency"] / 100
+                                end
+                            end
+                        end
+                    end
+                    if o["Visuals"]["Others"]["Disable_Bullet_Holes"] and v.Name == "Bullet" then
+                        v:Destroy()
+                    end
+                end
+            )
+        end
+    )
+    workspace.Camera.Debris.ChildAdded:Connect(
+        function(v)
+            spawn(
+                function()
+                    if v.Name == "Blood" then
+                        if o["Visuals"]["Other"]["Disable Blood"] then
+                            v:Destroy()
+                        end
+                    end
+                end
+            )
+        end
+    )
+    spawn(
+        function()
+            while true do
+                wait(1)
+                for u, aa in pairs(a:GetPlayers()) do
+                    if aa.Character and aa.Character:FindFirstChild("UpperTorso") then
+                        if aa.Team ~= c.Team then
+                            if o["Visuals"]["Chams"]["Enabled"] then
+                                for u, w in pairs(aa.Character:GetChildren()) do
+                                    if w:IsA("MeshPart") or w.Name == "Head" then
+                                        if not w:FindFirstChild("Chams") then
+                                            local ab = Instance.new("BoxHandleAdornment")
+                                            ab.Name = "Chams"
+                                            ab.Adornee = w
+                                            ab.Color3 = tocolor(o["Visuals"]["Chams"]["Color"])
+                                            ab.AlwaysOnTop = o["Visuals"]["Chams"]["Through_Walls"]
+                                            ab.ZIndex = 5
+                                            ab.Transparency = o["Visuals"]["Chams"]["Transparency"] / 100
+                                            ab.Size = w.Size + Vector3.new(0.03, 0.03, 0.03)
+                                            ab.Parent = w
+                                        else
+                                            if w:FindFirstChild("Chams") then
+                                                local ab = w.Chams
+                                                ab.Color3 = tocolor(o["Visuals"]["Chams"]["Color"])
+                                                ab.Transparency = o["Visuals"]["Chams"]["Transparency"] / 100
+                                                ab.AlwaysOnTop = o["Visuals"]["Chams"]["Through_Walls"]
+                                            end
+                                        end
+                                    end
+                                end
+                            else
+                                for u, w in pairs(aa.Character:GetDescendants()) do
+                                    if w.Name == "Chams" then
+                                        w:Destroy()
+                                    end
+                                end
+                            end
+                        else
+                            for u, w in pairs(aa.Character:GetDescendants()) do
+                                if w.Name == "Chams" then
+                                    w:Destroy()
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    )
+    local function ac(ad)
+        return Vector3.new(ad.r, ad.g, ad.b)
+    end
+    local ae = {
+        ["Head"] = {
+            [1] = Vector3.new(0.5, 0, 0),
+            [2] = Vector3.new(-0.5, 0, 0),
+            [3] = Vector3.new(0, 0, 0.5),
+            [4] = Vector3.new(0, 0, -0.5),
+            [5] = Vector3.new(0, 0.5, 0)
+        }
+    }
+    ae.create = function()
+        local af = Instance.new("Part")
+        af.Size = Vector3.new(0.1, 0.1, 0.1)
+        af.Anchored = true
+        af.CanCollide = false
+        af.Transparency = 1
+        return af
+    end
+    local ag = {
+        ["Head"] = 4,
+        ["FakeHead"] = 4,
+        ["HeadHB"] = 4,
+        ["UpperTorso"] = 1,
+        ["LowerTorso"] = 1.25,
+        ["LeftUpperArm"] = 1,
+        ["LeftLowerArm"] = 1,
+        ["LeftHand"] = 1,
+        ["RightUpperArm"] = 1,
+        ["RightLowerArm"] = 1,
+        ["RightHand"] = 1,
+        ["LeftUpperLeg"] = 0.75,
+        ["LeftLowerLeg"] = 0.75,
+        ["LeftFoot"] = 0.75,
+        ["RightUpperLeg"] = 0.75,
+        ["RightLowerLeg"] = 0.75,
+        ["RightFoot"] = 0.75
+    }
+    local ah = Instance.new("ScreenGui")
+    local ai = Instance.new("Frame")
+    local aj = Instance.new("UIListLayout")
+    local ak = Instance.new("TextLabel")
+    local al = Instance.new("TextLabel")
+    local am = Instance.new("TextLabel")
+    local an = Instance.new("TextLabel")
+    ah.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    ai.Parent = ah
+    ai.BackgroundTransparency = 1
+    ai.Size = UDim2.new(0, 124, 0, 74)
+    aj.Parent = ai
+    aj.SortOrder = Enum.SortOrder.LayoutOrder
+    ak.Parent = ai
+    ak.BackgroundTransparency = 1
+    ak.Size = UDim2.new(0, 124, 0, 18)
+    ak.Font = Enum.Font.GothamBold
+    ak.Text = "DT"
+    ak.TextColor3 = Color3.fromRGB(255, 0, 0)
+    ak.TextSize = 20
+    ak.TextStrokeTransparency = 0.5
+    al.Parent = ai
+    al.BackgroundTransparency = 1
+    al.Size = UDim2.new(0, 124, 0, 18)
+    al.Font = Enum.Font.GothamBold
+    al.Text = "Baim"
+    al.TextColor3 = Color3.fromRGB(255, 0, 0)
+    al.TextSize = 20
+    al.TextStrokeTransparency = 0.5
+    am.Parent = ai
+    am.BackgroundTransparency = 1
+    am.Size = UDim2.new(0, 124, 0, 18)
+    am.Font = Enum.Font.GothamBold
+    am.Text = "Min: 0"
+    am.TextColor3 = Color3.fromRGB(255, 0, 0)
+    am.TextSize = 20
+    am.TextStrokeTransparency = 0.5
+    an.Parent = ai
+    an.BackgroundTransparency = 1
+    an.Size = UDim2.new(0, 124, 0, 18)
+    an.Font = Enum.Font.GothamBold
+    an.Text = "No Target"
+    an.TextColor3 = Color3.fromRGB(255, 0, 0)
+    an.TextSize = 20
+    an.TextStrokeTransparency = 0.5
+    ah.Parent = game.CoreGui
+    local ao = false
+    game:GetService("RunService").RenderStepped:Connect(
+        function()
+            ai.Position = UDim2.new(0.5, -62, 0.5, 2)
+            ai.Visible = o["Rage"]["Other"]["Indicators"]
+            if o["Rage"]["Exploits"]["Double_Tap"] ~= true or o["Rage"]["Exploits"]["DT_Key"] == nil then
+                ak.TextColor3 = Color3.fromRGB(255, 0, 0)
+                ao = false
+            end
+            if o["Rage"]["Baim"]["Key"] == nil then
+                al.TextColor3 = Color3.fromRGB(255, 0, 0)
+            end
+            am.Text = "Min: " .. o["Rage"]["Other"]["Override_Amount"]
+            if o["Rage"]["Other"]["DMG_Override"] == nil then
+                am.TextColor3 = Color3.fromRGB(255, 0, 0)
+            end
+        end
+    )
+    local a5 = j.firebullet
+    j.firebullet = function(self, ...)
+        local J = {...}
+        if J[2] ~= "nixusdt" and ao then
+            game:GetService("RunService").RenderStepped:wait()
+            a5(nil, "nixusdt")
+        end
+        return a5(self, unpack(J))
+    end
+    game:GetService("UserInputService").InputBegan:Connect(
+        function(a0, ap)
+            if not ap then
+                if o["Rage"]["Exploits"]["Double_Tap"] == true and o["Rage"]["Exploits"]["DT_Key"] ~= nil then
+                    if a0.KeyCode == Enum.KeyCode[o["Rage"]["Exploits"]["DT_Key"]] then
+                        ak.TextColor3 =
+                            ak.TextColor3 == Color3.fromRGB(190, 255, 48) and Color3.fromRGB(255, 0, 0) or
+                            Color3.fromRGB(190, 255, 48)
+                        ao = ak.TextColor3 == Color3.fromRGB(190, 255, 48) and true or false
+                    end
+                end
+                if o["Rage"]["Baim"]["Key"] ~= nil then
+                    if a0.KeyCode == Enum.KeyCode[o["Rage"]["Baim"]["Key"]] then
+                        al.TextColor3 =
+                            al.TextColor3 == Color3.fromRGB(190, 255, 48) and Color3.fromRGB(255, 0, 0) or
+                            Color3.fromRGB(190, 255, 48)
+                    end
+                end
+                if o["Rage"]["Other"]["DMG_Override"] ~= nil then
+                    if a0.KeyCode == Enum.KeyCode[o["Rage"]["Other"]["DMG_Override"]] then
+                        am.TextColor3 =
+                            am.TextColor3 == Color3.fromRGB(190, 255, 48) and Color3.fromRGB(255, 0, 0) or
+                            Color3.fromRGB(190, 255, 48)
+                    end
+                end
+            end
+        end
+    )
+    local aq =
+        game:GetService("RunService").RenderStepped:Connect(
+        function()
+            S = nil
+            if
+                o["Rage"]["Main"]["Enabled"] and j.gun ~= "none" and workspace:FindFirstChild("Map") ~= nil and
+                    c.Character ~= nil and
+                    c.Character:FindFirstChild("Humanoid")
+             then
+                if o["Rage"]["Exploits"]["Remove_Recoil"] then
+                    j.resetaccuracy()
+                    j.RecoilX = 0
+                    j.RecoilY = 0
+                end
+                local _ =
+                    o["Rage"]["Main"]["Origin"] == "Camera" and cam.CFrame.p or
+                    o["Rage"]["Main"]["Origin"] == "Head" and c.Character.Head.Position or
+                    o["Rage"]["Main"]["Origin"] == "Real Head" and
+                        c.Character.HumanoidRootPart.CFrame.p + Vector3.new(0, 1.4, 0)
+                for u, aa in pairs(a:GetPlayers()) do
+                    if
+                        aa.Character ~= nil and aa.Character:FindFirstChildOfClass("ForceField") == nil and
+                            aa.Team ~= c.Team
+                     then
+                        if
+                            aa.Character:FindFirstChild("UpperTorso") ~= nil and
+                                aa.Character:FindFirstChild("Humanoid") ~= nil
+                         then
+                            local ar = {unpack(collision)}
+                            table.insert(ar, workspace.Map:WaitForChild("Clips"))
+                            table.insert(ar, workspace.Map:WaitForChild("SpawnPoints"))
+                            table.insert(ar, c.Character)
+                            table.insert(ar, cam)
+                            table.insert(ar, aa.Character.HumanoidRootPart)
+                            if aa.Character:FindFirstChild("BackC4") then
+                                table.insert(ar, aa.Character.BackC4)
+                            end
+                            if aa.Character:FindFirstChild("Gun") then
+                                table.insert(ar, aa.Character.Gun)
+                            end
+                            if o["Rage"]["Exploits"]["Force_Pitch"] ~= "Off" then
+                                aa.Character.UpperTorso.Waist.C0 =
+                                    o["Rage"]["Exploits"]["Force_Pitch"] == "Up" and
+                                    CFrame.new(Vector3.new(0, 0.6, 0)) * CFrame.Angles(0.7, 0, 0) or
+                                    o["Rage"]["Exploits"]["Force_Pitch"] == "Down" and
+                                        CFrame.new(Vector3.new(0, 0.6, 0)) * CFrame.Angles(-0.7, 0, 0) or
+                                    o["Rage"]["Exploits"]["Force_Pitch"] == "Zero" and
+                                        CFrame.new(Vector3.new(0, 0.6, 0)) * CFrame.Angles(0, 0, 0)
+                            end
+                            local as = {}
+                            if o["Rage"]["Hitboxes"]["Head"] then
+                                if
+                                    not o["Rage"]["Baim"]["On_Head_Break"] or
+                                        o["Rage"]["Baim"]["On_Head_Break"] and
+                                            aa.Character:FindFirstChild("FakeHead") ~= nil
+                                 then
+                                    if
+                                        not o["Rage"]["Baim"]["On_HP"] or
+                                            o["Rage"]["Baim"]["On_HP"] and
+                                                aa.Character.Humanoid.Health > o["Rage"]["Baim"]["HP_Amount"]
+                                     then
+                                        if al.TextColor3 ~= Color3.fromRGB(190, 255, 48) then
+                                            table.insert(as, aa.Character.Head)
+                                        end
+                                    end
+                                end
+                            end
+                            if
+                                o["Rage"]["Hitboxes"]["Torso"] or
+                                    o["Rage"]["Baim"]["On_HP"] and
+                                        aa.Character.Humanoid.Health <= o["Rage"]["Baim"]["HP_Amount"] or
+                                    o["Rage"]["Baim"]["On_Head_Break"] and
+                                        aa.Character:FindFirstChild("FakeHead") == nil or
+                                    al.TextColor3 == Color3.fromRGB(190, 255, 48)
+                             then
+                                table.insert(as, aa.Character.UpperTorso)
+                            end
+                            if o["Rage"]["Hitboxes"]["Pelvis"] then
+                                table.insert(as, aa.Character.LowerTorso)
+                            end
+                            for u, Y in ipairs(as) do
+                                local at = {unpack(ar)}
+                                if o["Rage"]["Main"]["Autowall"] then
+                                    local au = {}
+                                    local av, aw, ax
+                                    local ay = j.gun.Penetration.Value * 0.01
+                                    repeat
+                                        local az =
+                                            Ray.new(_, (Y.CFrame.p - _).unit * math.clamp(j.gun.Range.Value, 1, 300))
+                                        aw, ax = workspace:FindPartOnRayWithIgnoreList(az, at, false, true)
+                                        if aw ~= nil and aw.Parent ~= nil then
+                                            if
+                                                aw:FindFirstAncestor(aa.Name) or
+                                                    o["Rage"]["Other"]["Safepoint"] and Y == aw
+                                             then
+                                                av = aw
+                                            else
+                                                table.insert(at, aw)
+                                                table.insert(au, {["Position"] = ax, ["Hit"] = aw})
+                                            end
+                                        end
+                                    until av ~= nil or #au >= 4 or aw == nil
+                                    if av ~= nil then
+                                        local aA = 1
+                                        if #au == 0 then
+                                            if ag[av.Name] ~= nil then
+                                                local aA = j.gun.DMG.Value * ag[av.Name]
+                                                if aa:FindFirstChild("Kevlar") then
+                                                    if string.find(av.Name, "Head") then
+                                                        if aa:FindFirstChild("Helmet") then
+                                                            aA = aA / 100 * j.gun.ArmorPenetration.Value
+                                                        end
+                                                    else
+                                                        aA = aA / 100 * j.gun.ArmorPenetration.Value
+                                                    end
+                                                end
+                                                if
+                                                    am.TextColor3 == Color3.fromRGB(190, 255, 48) and
+                                                        aA >= o["Rage"]["Other"]["Override_Amount"] or
+                                                        am.TextColor3 == Color3.fromRGB(255, 0, 0) and
+                                                            aA >= o["Rage"]["Main"]["Min_Damage"]
+                                                 then
+                                                    S = av
+                                                    if not o["Rage"]["Main"]["Silent Aim"] then
+                                                        cam.CFrame = CFrame.new(cam.CFrame.Position, av.Position)
+                                                    end
+                                                    if o["Rage"]["Main"]["Autoshoot"] and j.DISABLED == false then
+                                                        T = true
+                                                        j.firebullet()
+                                                        T = false
+                                                    end
+                                                end
+                                            end
+                                        else
+                                            local aB = 0
+                                            local aC = 1
+                                            for a1 = 1, #au do
+                                                local aD = au[a1]
+                                                local w = aD["Hit"]
+                                                local ax = aD["Position"]
+                                                local aE = 1
+                                                if w.Material == Enum.Material.DiamondPlate then
+                                                    aE = 3
+                                                end
+                                                if
+                                                    w.Material == Enum.Material.CorrodedMetal or
+                                                        w.Material == Enum.Material.Metal or
+                                                        w.Material == Enum.Material.Concrete or
+                                                        w.Material == Enum.Material.Brick
+                                                 then
+                                                    aE = 2
+                                                end
+                                                if
+                                                    w.Name == "Grate" or w.Material == Enum.Material.Wood or
+                                                        w.Material == Enum.Material.WoodPlanks
+                                                 then
+                                                    aE = 0.1
+                                                end
+                                                if w.Name == "nowallbang" then
+                                                    aE = 100
+                                                end
+                                                if w:FindFirstChild("PartModifier") then
+                                                    aE = w.PartModifier.Value
+                                                end
+                                                if
+                                                    w.Transparency == 1 or w.CanCollide == false or w.Name == "Glass" or
+                                                        w.Name == "Cardboard"
+                                                 then
+                                                    aE = 0
+                                                end
+                                                local aF =
+                                                    (Y.CFrame.p - ax).unit * math.clamp(j.gun.Range.Value, 1, 100)
+                                                local az = Ray.new(ax + aF * 1, aF * -2)
+                                                local u, aG = workspace:FindPartOnRayWithWhitelist(az, {w}, true)
+                                                local aH = (aG - ax).Magnitude
+                                                aH = aH * aE
+                                                aB = math.min(ay, aB + aH)
+                                                aC = 1 - aB / ay
+                                            end
+                                            if ag[av.Name] ~= nil and aB > 0 and aC > 0 then
+                                                local aA = j.gun.DMG.Value * ag[av.Name] * aC
+                                                an.Text = aA
+                                                if aa:FindFirstChild("Kevlar") then
+                                                    if string.find(av.Name, "Head") then
+                                                        if aa:FindFirstChild("Helmet") then
+                                                            aA = aA / 100 * j.gun.ArmorPenetration.Value
+                                                        end
+                                                    else
+                                                        aA = aA / 100 * j.gun.ArmorPenetration.Value
+                                                    end
+                                                end
+                                                if
+                                                    am.TextColor3 == Color3.fromRGB(190, 255, 48) and
+                                                        aA >= o["Rage"]["Other"]["Override_Amount"] or
+                                                        am.TextColor3 == Color3.fromRGB(255, 0, 0) and
+                                                            aA >= o["Rage"]["Main"]["Min_Damage_Wall"]
+                                                 then
+                                                    S = av
+                                                    if not o["Rage"]["Main"]["Silent Aim"] then
+                                                        cam.CFrame = CFrame.new(cam.CFrame.Position, av.Position)
+                                                    end
+                                                    if o["Rage"]["Main"]["Autoshoot"] and j.DISABLED == false then
+                                                        T = true
+                                                        j.firebullet()
+                                                        T = false
+                                                    end
+                                                end
+                                            end
+                                        end
+                                    end
+                                else
+                                    local az = Ray.new(_, (Y.CFrame.p - _).unit * math.clamp(j.gun.Range.Value, 1, 300))
+                                    local aw, ax = workspace:FindPartOnRayWithIgnoreList(az, ar, false, true)
+                                    if aw and aw:FindFirstAncestor(aa.Name) then
+                                        if ag[aw.Name] ~= nil then
+                                            local aA = j.gun.DMG.Value * ag[aw.Name]
+                                            if aa:FindFirstChild("Kevlar") then
+                                                if string.find(aw.Name, "Head") then
+                                                    if aa:FindFirstChild("Helmet") then
+                                                        aA = aA / 100 * j.gun.ArmorPenetration.Value
+                                                    end
+                                                else
+                                                    aA = aA / 100 * j.gun.ArmorPenetration.Value
+                                                end
+                                            end
+                                            if
+                                                am.TextColor3 == Color3.fromRGB(190, 255, 48) and
+                                                    aA >= o["Rage"]["Other"]["Override_Amount"] or
+                                                    am.TextColor3 == Color3.fromRGB(255, 0, 0) and
+                                                        aA >= o["Rage"]["Main"]["Min_Damage"]
+                                             then
+                                                S = aw
+                                                if not o["Rage"]["Main"]["Silent Aim"] then
+                                                    cam.CFrame = CFrame.new(cam.CFrame.Position, aw.Position)
+                                                end
+                                                if o["Rage"]["Main"]["Autoshoot"] and j.DISABLED == false then
+                                                    T = true
+                                                    j.firebullet()
+                                                    T = false
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    )
+    local aI = Instance.new("Part")
+    aI.Anchored = true
+    aI.Transparency = 1
+    aI.Size = Vector3.new(100, 1, 100)
+    aI.Parent = workspace
+    local aJ = Instance.new("ParticleEmitter")
+    aJ.Texture = "rbxassetid://304777684"
+    aJ.Lifetime = NumberRange.new(200)
+    aJ.Rate = 300
+    aJ.Speed = NumberRange.new(5)
+    aJ.EmissionDirection = "Bottom"
+    aJ.LightInfluence = 25
+    aJ.Size = NumberSequence.new({NumberSequenceKeypoint.new(0, 0.5), NumberSequenceKeypoint.new(1, 0.5)})
+    aJ.Parent = aI
+    local aK =
+        game:GetService("RunService").RenderStepped:Connect(
+        function()
+            aI.Position = workspace.CurrentCamera.CFrame.Position + Vector3.new(0, 40, 0)
+            aJ.Enabled = o["Visuals"]["Particles"]["Enabled"]
+            aJ.Color = ColorSequence.new(tocolor(o["Visuals"]["Particles"]["Color"]))
+            aJ.Texture =
+                o["Visuals"]["Particles"]["Type"] == "Snow" and "rbxassetid://304777684" or "rbxassetid://419625073"
+            local aL = c.PlayerGui.GUI.Crosshairs.Crosshair
+            for u, aM in pairs(aL:GetChildren()) do
+                if string.find(aM.Name, "Frame") then
+                    aM.BorderSizePixel = 0
+                    if o["Visuals"]["Better Crosshair"]["Enabled"] then
+                        local aL = c.PlayerGui.GUI.Crosshairs.Crosshair
+                        aL.LeftFrame.Size = UDim2.new(0, 10, 0, 2)
+                        aL.RightFrame.Size = UDim2.new(0, 10, 0, 2)
+                        aL.TopFrame.Size = UDim2.new(0, 2, 0, 10)
+                        aL.BottomFrame.Size = UDim2.new(0, 2, 0, 10)
+                        if o["Visuals"]["Better Crosshair"]["Border"] then
+                            aM.BorderSizePixel = o["Visuals"]["Better Crosshair"]["Border_Thickness"]
+                            aM.BorderColor3 = tocolor(o["Visuals"]["Better Crosshair"]["Border_Color"])
+                        end
+                        if o["Visuals"]["Better Crosshair"]["Override_Length"] then
+                            aL.LeftFrame.Size = UDim2.new(0, o["Visuals"]["Better Crosshair"]["Length"], 0, 2)
+                            aL.RightFrame.Size = UDim2.new(0, o["Visuals"]["Better Crosshair"]["Length"], 0, 2)
+                            aL.TopFrame.Size = UDim2.new(0, 2, 0, o["Visuals"]["Better Crosshair"]["Length"])
+                            aL.BottomFrame.Size = UDim2.new(0, 2, 0, o["Visuals"]["Better Crosshair"]["Length"])
+                        end
+                    end
+                end
+            end
+            if o["Anti-Aim"]["Extra"]["Kill_All"] then
+                for i,v in pairs(game.Players:GetPlayers()) do 
+                    if v.Character and v ~= game.Players.LocalPlayer and v.TeamColor ~= game.Players.LocalPlayer.TeamColor then
+                        local oh1 = v.Character.Head
+                        local oh2 = v.Character.Head.CFrame.p
+                        local oh3 = game.Players.LocalPlayer.Character.Gun.Name
+                        local oh4 = 4096
+                        local oh5 = game.Players.LocalPlayer.Character.Gun
+                        local oh8 = 15
+                        local oh9 = false
+                        local oh10 = false
+                        local oh11 = Vector3.new(-126.878326, 353.474854, 49.3892708)
+                        local oh12 = 16868
+                        local oh13 = Vector3.new(0, 0, -1)
+                        game:GetService("ReplicatedStorage").Events.HitPart:FireServer(oh1, oh2, oh3, oh4, oh5, oh6, oh7, oh8, oh9, oh10, oh11, oh12, oh13)
+            end
+        end
+    end
+            if o["Visuals"]["Self"]["Override_Skybox"] then
+                local t = k:FindFirstChildOfClass("Sky")
+                if not t then
+                    t = Instance.new("Sky")
+                    t.SkyboxLf = s[o["Visuals"]["Self"]["Skybox"]].SkyboxLf
+                    t.SkyboxBk = s[o["Visuals"]["Self"]["Skybox"]].SkyboxBk
+                    t.SkyboxDn = s[o["Visuals"]["Self"]["Skybox"]].SkyboxDn
+                    t.SkyboxFt = s[o["Visuals"]["Self"]["Skybox"]].SkyboxFt
+                    t.SkyboxRt = s[o["Visuals"]["Self"]["Skybox"]].SkyboxRt
+                    t.SkyboxUp = s[o["Visuals"]["Self"]["Skybox"]].SkyboxUp
+                    t.Parent = k
+                end
+            end
+
+
+            if cam:FindFirstChild("Arms") and o["Visuals"]["Hand Chams"]["Enabled"] then
+                if o["Visuals"]["Hand Chams"]["Gun"] then
+                    for u, w in pairs(cam.Arms:GetChildren()) do
+                        if w:IsA("MeshPart") and w.Transparency ~= 1 then
+                            w.TextureID = ""
+                            w.Color = tocolor(o["Visuals"]["Hand Chams"]["Gun_Color"])
+                            w.Material =
+                                o["Visuals"]["Hand Chams"]["Gun_Material"] == "Custom" and Enum.Material.SmoothPlastic or
+                                o["Visuals"]["Hand Chams"]["Gun_Material"] == "Flat" and Enum.Material.Neon or
+                                o["Visuals"]["Hand Chams"]["Gun_Material"] == "ForceField" and Enum.Material.ForceField
+                            w.Transparency = o["Visuals"]["Hand Chams"]["Gun_Transparency"] / 100
+                            w.Reflectance = o["Visuals"]["Hand Chams"]["Gun_Reflectance"]
+                        end
+                    end
+                for u, v in pairs(cam.Arms:GetChildren()) do
+                    if v:IsA("Model") then
+                        for u, w in pairs(v:GetDescendants()) do
+                            if o["Visuals"]["Hand Chams"]["Hands"] then 
+                                if string.find(w.Name, "Glove") and w:IsA("Part") then
+                                    if o["Visuals"]["Hand Chams"]["Remove_Gloves"] then
+                                        w:Destroy()
+                                    else
+                                        w.Material = Enum.Material.ForceField
+                                        w.Mesh.VertexColor = ac(tocolor(o["Visuals"]["Hand Chams"]["Hand_Color"]))
+                                    end
+                                end
+                                if string.find(w.Name, "Sleeve") and w:IsA("Part") then
+                                    if o["Visuals"]["Hand Chams"]["Remove_Sleeves"] then
+                                        w:Destroy()
+                                    else
+                                        w.Material = Enum.Material.ForceField
+                                        w.Mesh.VertexColor = ac(tocolor(o["Visuals"]["Hand Chams"]["Hand_Color"]))
+                                    end
+                                end
+                            if o["Visuals"]["Hand Chams"]["Skin"] then
+                                if string.find(w.Name, "Arm") and w:IsA("Part") then
+                                    w.Color = tocolor(o["Visuals"]["Hand Chams"]["Skin_Color"])
+                                    w.Transparency = o["Visuals"]["Hand Chams"]["Skin_Transparency"] / 100
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+    y.mainloop =
+        game:GetService("RunService").RenderStepped:Connect(
+        function()
+            U.spin = U.spin + o["Anti-Aim"]["Yaw"]["Spin_Increment"]
+            U.spin = math.clamp(U.spin, 0, o["Anti-Aim"]["Yaw"]["Spin_Range"])
+            U.jitter = not U.jitter
+            U.edown = game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.E)
+            if U.spin == o["Anti-Aim"]["Yaw"]["Spin_Range"] then
+                U.spin = 0
+            end
+            if U.edown or o["Anti-Aim"]["Angles"]["Enabled"] and o["Anti-Aim"]["Angles"]["Pitch"] ~= "Off" then
+                q()
+            end
+            if
+                game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.Space) and
+                    game:GetService("UserInputService"):GetFocusedTextBox() == nil and
+                    o["Misc"]["Bunny Hop"]["Enabled"]
+             then
+                U.hopping = true
+                if
+                    c.Character and c.Character:FindFirstChild("Humanoid") and
+                        c.Character:FindFirstChild("Humanoid").Health > 0
+                 then
+                    c.Character.Humanoid.Jump = true
+                end
+            else
+                if U.hopping == true then
+                    U.hopping = false
+                end
+            end
+            if o["Visuals"]["Self"]["Override_FOV"] then
+                cam.FieldOfView = o["Visuals"]["Self"]["FOV_Amount"]
+            end
+            if o["Visuals"]["World"]["No_Scope"] then
+                pcall(
+                    function()
+                        c.PlayerGui.GUI.Crosshairs.Scope.ImageTransparency = 1
+                        c.PlayerGui.GUI.Crosshairs.Scope.Scope.ImageTransparency = 1
+                        c.PlayerGui.GUI.Crosshairs.Scope.Scope.Blur.ImageTransparency = 1
+                        c.PlayerGui.GUI.Crosshairs.Scope.Scope.Blur.Blur.ImageTransparency = 1
+                        c.PlayerGui.GUI.Crosshairs.Frame1.Transparency = 1
+                        c.PlayerGui.GUI.Crosshairs.Frame2.Transparency = 1
+                        c.PlayerGui.GUI.Crosshairs.Frame3.Transparency = 1
+                        c.PlayerGui.GUI.Crosshairs.Frame4.Transparency = 1
+                    end
+                )
+            end
+            if o["Visuals"]["World"]["No_Flash"] then
+                game.Players.LocalPlayer.PlayerGui.Blnd.Blind.Visible = false
+            else
+                game.Players.LocalPlayer.PlayerGui.Blnd.Blind.Visible = true
+            end
+            if o["Visuals"]["World"]["Time_Of_Day"] then
+                k.TimeOfDay = o["Visuals"]["World"]["Time"]
+            else
+                k.TimeOfDay = 12
+            end
+            if o["Visuals"]["World"]["Night_Mode"] then
+                k.Ambient =
+                    Color3.fromRGB(
+                    255 - o["Visuals"]["World"]["Night_Mode_Strength"],
+                    255 - o["Visuals"]["World"]["Night_Mode_Strength"],
+                    255 - o["Visuals"]["World"]["Night_Mode_Strength"]
+                )
+            else
+                k.Ambient = Color3.fromRGB(127, 127, 127)
+            end
+            if o["Visuals"]["World"]["World_Color"] then
+                k.OutdoorAmbient = tocolor(o["Visuals"]["World"]["World_Color_Color"])
+            end
+            if o["Anti-Aim"]["Extra"]["No_Head"] then
+                pcall(
+                    function()
+                        if c.Character:FindFirstChild("FakeHead") then
+                            c.Character.FakeHead:Destroy()
+                        end
+                        if c.Character:FindFirstChild("HeadHB") then
+                            c.Character.HeadHB:Destroy()
+                        end
+                    end
+                )
+            end
+            if o["Anti-Aim"]["Angles"]["Yaw"] ~= "Off" and o["Anti-Aim"]["Angles"]["Enabled"] then
+                local aN =
+                    o["Anti-Aim"]["Angles"]["Yaw"] == "Left" and 0 or o["Anti-Aim"]["Angles"]["Yaw"] == "Right" and 180 or
+                    o["Anti-Aim"]["Angles"]["Yaw"] == "Back" and 90 or
+                    o["Anti-Aim"]["Angles"]["Yaw"] == "Custom" and o["Anti-Aim"]["Angles"]["Custom_Yaw"] or
+                    o["Anti-Aim"]["Angles"]["Yaw"] == "Random" and math.random(0, 360) or
+                    0
+                if o["Anti-Aim"]["Yaw"]["Spin"] then
+                    aN = aN + U.spin
+                end
+                if U.side ~= "none" then
+                    if U.side == "left" then
+                        aN = 0
+                    else
+                        aN = 180
+                    end
+                end
+                pcall(
+                    function()
+                        c.Character.Humanoid.AutoRotate = false
+                        local aO = c.Character.HumanoidRootPart
+                        local aP = cam.CFrame.LookVector
+                        local aQ = -math.atan2(aP.Z, aP.X) + math.rad(aN)
+                        if
+                            o["Anti-Aim"]["Extra"]["Disable_On_E"] and not U.edown or
+                                not o["Anti-Aim"]["Extra"]["Disable_On_E"]
+                         then
+                            if o["Anti-Aim"]["Yaw"]["Jitter"] and U.jitter then
+                                if o["Anti-Aim"]["Yaw"]["Randomize_Jitter"] then
+                                    aQ =
+                                        -math.atan2(aP.Z, aP.X) +
+                                        math.rad(
+                                            math.random(
+                                                math.clamp(
+                                                    o["Anti-Aim"]["Yaw"]["Randomize_Jitter_Min"],
+                                                    0,
+                                                    o["Anti-Aim"]["Yaw"]["Jitter_Range"]
+                                                ),
+                                                o["Anti-Aim"]["Yaw"]["Jitter_Range"]
+                                            )
+                                        )
+                                else
+                                    aQ = -math.atan2(aP.Z, aP.X) + math.rad(o["Anti-Aim"]["Yaw"]["Jitter_Range"])
+                                end
+                                if o["Anti-Aim"]["Angles"]["At Targets"] and S ~= nil then
+                                    aO.CFrame =
+                                        CFrame.new(aO.Position, S.Parent.HumanoidRootPart.Position) *
+                                        CFrame.Angles(0, math.rad(180), 0)
+                                else
+                                    aO.CFrame = CFrame.new(aO.Position) * CFrame.Angles(0, aQ, 0)
+                                end
+                            else
+                                if o["Anti-Aim"]["Angles"]["At Targets"] and S ~= nil then
+                                    aO.CFrame =
+                                        CFrame.new(aO.Position, S.Parent.HumanoidRootPart.Position) *
+                                        CFrame.Angles(0, math.rad(180), 0)
+                                else
+                                    aO.CFrame = CFrame.new(aO.Position) * CFrame.Angles(0, aQ, 0)
+                                end
+                            end
+                        else
+                            aO.CFrame =
+                                CFrame.new(aO.Position) * CFrame.Angles(0, -math.atan2(aP.Z, aP.X) + math.rad(270), 0)
+                        end
+                    end
+                )
+            else
+                pcall(
+                    function()
+                        c.Character.Humanoid.AutoRotate = true
+                    end
+                )
+            end
+            c.CameraMaxZoomDistance =
+                o["Visuals"]["Self"]["Third_Person"] and c.Status.Alive.Value == true and U.thirdperson and
+                o["Visuals"]["Self"]["Third_Person_Distance"] or
+                c.Status.Alive.Value == true and 0 or
+                c.CameraMaxZoomDistance
+            c.CameraMinZoomDistance =
+                o["Visuals"]["Self"]["Third_Person"] and c.Status.Alive.Value == true and U.thirdperson and
+                o["Visuals"]["Self"]["Third_Person_Distance"] or
+                c.Status.Alive.Value == true and 0 or
+                c.CameraMinZoomDistance
+            if cam:FindFirstChild("Arms") ~= nil then
+                cam.Arms.HumanoidRootPart.Transparency = 1
+            end
+        end
+    )
+    spawn(
+        function()
+            while wait(0.1) do
+                for u, aa in pairs(a:GetPlayers()) do
+                    pcall(
+                        function()
+                            if aa:FindFirstChild("Status") and aa:FindFirstChild("Status").Alive.Value == true then
+                                if aa.Team ~= c.Team and aa.Character:FindFirstChild("HumanoidRootPart") then
+                                    if aa.Character.HumanoidRootPart:FindFirstChild("Box") then
+                                        aa.Character.HumanoidRootPart:FindFirstChild("Box"):Destroy()
+                                    end
+                                    if aa.Character.HumanoidRootPart:FindFirstChild("Name") then
+                                        aa.Character.HumanoidRootPart:FindFirstChild("Name"):Destroy()
+                                    end
+                                    if aa.Character.HumanoidRootPart:FindFirstChild("Health") then
+                                        aa.Character.HumanoidRootPart:FindFirstChild("Health"):Destroy()
+                                    end
+                                    if o["Visuals"]["Enemies"]["Box"] then
+                                        local aR = Instance.new("BillboardGui")
+                                        local ai = Instance.new("Frame")
+                                        local aS = Instance.new("Frame")
+                                        local aT = Instance.new("Frame")
+                                        local aU = Instance.new("Frame")
+                                        local aV = Instance.new("Frame")
+                                        local aW = Instance.new("Frame")
+                                        local aX = Instance.new("Frame")
+                                        local aY = Instance.new("Frame")
+                                        local aZ = Instance.new("Frame")
+                                        local a_ = Instance.new("Frame")
+                                        local b0 = Instance.new("Frame")
+                                        local b1 = Instance.new("Frame")
+                                        aR.Name = "Box"
+                                        aR.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+                                        aR.Active = true
+                                        aR.AlwaysOnTop = true
+                                        aR.ExtentsOffset = Vector3.new(0, -0.5, 0)
+                                        aR.LightInfluence = 1.000
+                                        aR.Size = UDim2.new(o["Visuals"]["Enemies"]["Box_X"] / 10, 0, 5.5, 0)
+                                        ai.BackgroundColor3 = tocolor(o["Visuals"]["Enemies"]["Box_Color"])
+                                        ai.BorderSizePixel = 0
+                                        ai.Position = UDim2.new(0, 0, 0, 1)
+                                        ai.Size = UDim2.new(1, 0, 0, 1)
+                                        ai.BackgroundTransparency = 0
+                                        ai.Parent = aR
+                                        aS.BackgroundColor3 = tocolor(o["Visuals"]["Enemies"]["Box_Color"])
+                                        aS.BorderSizePixel = 0
+                                        aS.Position = UDim2.new(0, 1, 0, 0)
+                                        aS.Size = UDim2.new(0, 1, 1, 0)
+                                        aS.BackgroundTransparency = 0
+                                        aS.Parent = aR
+                                        aT.BackgroundColor3 = tocolor(o["Visuals"]["Enemies"]["Box_Color"])
+                                        aT.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                                        aT.BorderSizePixel = 0
+                                        aT.Position = UDim2.new(1, -2, 0, 0)
+                                        aT.Size = UDim2.new(0, 1, 1, 0)
+                                        aT.BackgroundTransparency = 0
+                                        aT.Parent = aR
+                                        aU.BackgroundColor3 = tocolor(o["Visuals"]["Enemies"]["Box_Color"])
+                                        aU.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                                        aU.BorderSizePixel = 0
+                                        aU.Position = UDim2.new(0, 0, 1, -2)
+                                        aU.Size = UDim2.new(1, 0, 0, 1)
+                                        aU.BackgroundTransparency = 0
+                                        aU.Parent = aR
+                                        aV.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                                        aV.BorderSizePixel = 0
+                                        aV.Position = UDim2.new(0, 2, 0, 2)
+                                        aV.Size = UDim2.new(0, 1, 1, -4)
+                                        aV.Parent = aR
+                                        aW.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                                        aW.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                                        aW.BorderSizePixel = 0
+                                        aW.Position = UDim2.new(1, -3, 0, 2)
+                                        aW.Size = UDim2.new(0, 1, 1, -4)
+                                        aW.Parent = aR
+                                        aX.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                                        aX.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                                        aX.BorderSizePixel = 0
+                                        aX.Position = UDim2.new(0, 0, 1, -1)
+                                        aX.Size = UDim2.new(1, 0, 0, 1)
+                                        aX.Parent = aR
+                                        aY.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                                        aY.BorderSizePixel = 0
+                                        aY.Position = UDim2.new(0, 2, 0, 2)
+                                        aY.Size = UDim2.new(1, -4, 0, 1)
+                                        aY.Parent = aR
+                                        aZ.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                                        aZ.BorderSizePixel = 0
+                                        aZ.Size = UDim2.new(1, 0, 0, 1)
+                                        aZ.Parent = aR
+                                        a_.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                                        a_.BorderSizePixel = 0
+                                        a_.Size = UDim2.new(0, 1, 1, 0)
+                                        a_.Parent = aR
+                                        b0.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                                        b0.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                                        b0.BorderSizePixel = 0
+                                        b0.Position = UDim2.new(1, -1, 0, 0)
+                                        b0.Size = UDim2.new(0, 1, 1, 0)
+                                        b0.Parent = aR
+                                        b1.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                                        b1.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                                        b1.BorderSizePixel = 0
+                                        b1.Position = UDim2.new(0, 2, 1, -3)
+                                        b1.Size = UDim2.new(1, -4, 0, 1)
+                                        b1.Parent = aR
+                                        aR.Adornee = aa.Character.HumanoidRootPart
+                                        aR.Parent = aa.Character.HumanoidRootPart
+                                    end
+                                    if o["Visuals"]["Enemies"]["Name"] then
+                                        local b2 = Instance.new("BillboardGui")
+                                        local b3 = Instance.new("TextLabel")
+                                        b2.Name = "Name"
+                                        b2.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+                                        b2.Active = true
+                                        b2.AlwaysOnTop = true
+                                        b2.ExtentsOffset = Vector3.new(0, -0.5, 0)
+                                        b2.LightInfluence = 1.000
+                                        b2.Size = UDim2.new(4.5, 0, 2, 0)
+                                        b2.StudsOffset = Vector3.new(0, o["Visuals"]["Enemies"]["Name_Offset"], 0)
+                                        b3.Name = "name"
+                                        b3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                                        b3.BackgroundTransparency = 1.000
+                                        b3.Size = UDim2.new(1, 0, 1, 0)
+                                        b3.Font = o["Visuals"]["Enemies"]["Name_Font"]
+                                        b3.Text = aa.Name
+                                        b3.TextColor3 = tocolor(o["Visuals"]["Enemies"]["Name_Color"])
+                                        b3.TextSize = o["Visuals"]["Enemies"]["Name_Font_Size"]
+                                        b3.TextStrokeTransparency = 0.100
+                                        b3.TextYAlignment = Enum.TextYAlignment.Bottom
+                                        b3.TextTransparency = 0
+                                        b2.Adornee = aa.Character.HumanoidRootPart
+                                        b3.Parent = b2
+                                        b2.Parent = aa.Character.HumanoidRootPart
+                                    end
+                                    if o["Visuals"]["Enemies"]["Health"] then
+                                        local b4 = Instance.new("BillboardGui")
+                                        local b5 = Instance.new("Frame")
+                                        local b6 = Instance.new("Frame")
+                                        b4.Name = "Health"
+                                        b4.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+                                        b4.Active = true
+                                        b4.AlwaysOnTop = true
+                                        b4.ExtentsOffset = Vector3.new(0, -0.5, 0)
+                                        b4.LightInfluence = 1.000
+                                        b4.Size = UDim2.new(1, 0, 5.5, 0)
+                                        b4.StudsOffset = Vector3.new(-o["Visuals"]["Enemies"]["Health_Offset"], 0, 0)
+                                        b5.Name = "green"
+                                        b5.AnchorPoint = Vector2.new(0, 1)
+                                        b5.BackgroundColor3 = tocolor(o["Visuals"]["Enemies"]["Health_Color"])
+                                        b5.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                                        b5.BorderSizePixel = 0
+                                        b5.Position =
+                                            UDim2.new(1, -o["Visuals"]["Enemies"]["Health_Thickness"] - 1, 1, -1)
+                                        b5.Size =
+                                            UDim2.new(
+                                            0,
+                                            o["Visuals"]["Enemies"]["Health_Thickness"],
+                                            aa.Character.Humanoid.Health / 100,
+                                            -2
+                                        )
+                                        b5.ZIndex = 3
+                                        b5.Parent = b4
+                                        b6.Name = "white"
+                                        b6.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                                        b6.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                                        b6.Position =
+                                            UDim2.new(1, -o["Visuals"]["Enemies"]["Health_Thickness"] - 1, 0, 1)
+                                        b6.Size = UDim2.new(0, o["Visuals"]["Enemies"]["Health_Thickness"], 1, -2)
+                                        b6.ZIndex = 2
+                                        b6.Parent = b4
+                                        b4.Adornee = aa.Character.HumanoidRootPart
+                                        b4.Parent = aa.Character.HumanoidRootPart
+                                    end
+                                else
+                                    pcall(
+                                        function()
+                                            if aa.Character.HumanoidRootPart:FindFirstChild("Box") then
+                                                aa.Character.HumanoidRootPart:FindFirstChild("Box"):Destroy()
+                                            end
+                                            if aa.Character.HumanoidRootPart:FindFirstChild("Name") then
+                                                aa.Character.HumanoidRootPart:FindFirstChild("Name"):Destroy()
+                                            end
+                                            if aa.Character.HumanoidRootPart:FindFirstChild("Health") then
+                                                aa.Character.HumanoidRootPart:FindFirstChild("Health"):Destroy()
+                                            end
+                                        end
+                                    )
+                                end
+                            end
+                        end
+                    )
+                end
+            end
+        end
+    )
+end
+a.PlayerAdded:Connect(
+    function(b7)
+        b7.CharacterAdded:Connect(
+            function(b8)
+                b8.ChildAdded:Connect(
+                    function(v)
+                        wait(1)
+                        spawn(
+                            function()
+                                if v:IsA("Accessory") then
+                                    table.insert(collision, v)
+                                end
+                                if v:IsA("Part") then
+                                    spawn(
+                                        function()
+                                            if v ~= nil then
+                                                if v.Name ~= "HeadHB" and v.Name ~= "FakeHead" then
+                                                    table.insert(collision, v)
+                                                end
+                                            end
+                                        end
+                                    )
+                                end
+                            end
+                        )
+                    end
+                )
+            end
+        )
+    end
+)
+if c.Character and c.Character:FindFirstChild("Humanoid") and c.Character:FindFirstChild("UpperTorso") then
+    for u, aa in pairs(a:GetPlayers()) do
+        if aa.Character ~= nil then
+            for u, v in pairs(aa.Character:GetChildren()) do
+                if v:IsA("Accessory") then
+                    table.insert(collision, v)
+                end
+                if v:IsA("Part") then
+                    spawn(
+                        function()
+                            if v ~= nil then
+                                if v.Name ~= "HeadHB" and v.Name ~= "FakeHead" then
+                                    table.insert(collision, v)
+                                end
+                            end
+                        end
+                    )
+                end
+            end
+        end
+    end
+end
+y.initiate()
+C = true
+return finity
